@@ -1,0 +1,28 @@
+version: '3'
+
+vars:
+  HOST:
+    sh: "hostname"
+  NIXPKGS_ALLOW_UNFREE: 1
+
+env:
+  NIXPKGS_ALLOW_UNFREE: 1
+
+tasks:
+  apply:
+    desc: "Nix Darwin の設定をビルドして適用します"
+    platforms: [darwin]
+    cmds:
+      - |
+        nix build .#darwinConfigurations.{{.HOST}}.system --extra-experimental-features 'nix-command flakes' 
+        sudo ./result/sw/bin/darwin-rebuild switch --flake ".#{{.HOST}}"
+
+  gc:
+    desc: "Nix ストアのガベージコレクションを実行します"
+    cmds:
+      - nix-collect-garbage --delete-older-than 30d
+
+  gc-all:
+    desc: "すべての古い世代を削除します（現在の世代のみ保持）"
+    cmds:
+      - nix-collect-garbage -d
