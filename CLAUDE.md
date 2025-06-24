@@ -27,7 +27,7 @@ sudo ./result/sw/bin/darwin-rebuild switch --flake ".#CA-20033730"
 
 The system includes mise for runtime version management. Key tools available:
 
--   `mise` - Runtime version manager (configured in `modules/shell/mise/mise.nix`)
+-   `mise` - Runtime version manager (configured in `modules/home/base/programs/mise/mise.nix`)
 -   `task` - Task runner (alias: `t`)
 -   `nixfmt-rfc-style` - Nix code formatting
 
@@ -37,9 +37,13 @@ The system includes mise for runtime version management. Key tools available:
 
 -   `flake.nix` - Main flake configuration with inputs and Darwin system definition
 -   `modules/` - Modular configuration components
-    -   `shell/fish/` - Fish shell configuration with custom functions and aliases
-    -   `shell/mise/` - Development environment configuration
-    -   `shell/ghostty/` - Terminal emulator configuration
+    -   `home/base/programs/` - Cross-platform program configurations
+        -   `fish/` - Fish shell configuration with custom functions and aliases
+        -   `mise/` - Development environment configuration
+        -   `git/` - Git configuration
+        -   `ssh/` - SSH configuration
+    -   `home/darwin/programs/` - macOS-specific program configurations
+        -   `ghostty/` - Ghostty terminal emulator configuration
 
 ### Package Management
 

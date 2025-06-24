@@ -34,7 +34,6 @@
     largesize = 54;
     show-recents = false;
     mineffect = "scale";
-    # persistent-others = [ "/Users/${username}/Downloads" ];
   };
 
   system.defaults.finder = {
@@ -57,6 +56,8 @@
     ShowDayOfWeek = true;
     # 秒表示
     ShowSeconds = true;
+    # AM/PM表示
+    ShowAMPM = false;
   };
 
   system.defaults.screencapture = {

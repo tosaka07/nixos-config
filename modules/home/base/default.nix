@@ -6,10 +6,13 @@
 }:
 {
   imports = [
-    ./shell/fish/fish.nix
-    ./shell/mise/mise.nix
-    ./shell/git/git.nix
-    ./shell/ssh/ssh.nix
+    ./programs/fish/fish.nix
+    ./programs/atuin.nix
+    ./programs/bat.nix
+    ./programs/git.nix
+    ./programs/gitui.nix
+    ./programs/mise.nix
+    ./programs/ssh.nix
   ];
 
   # Allow unfree packages for this user
@@ -21,21 +24,21 @@
     fzf
     fd
     ripgrep
-    bat
     eza
     atuin
     starship
     zoxide
     neovim
-    git
     delta
-    gitui
     gh
     ghq
     go-task
     nixfmt-rfc-style
     google-cloud-sdk
     trash-cli
-    mise
+
+    # fonts
+    udev-gothic-nf
+    plemoljp-nf
   ];
 }

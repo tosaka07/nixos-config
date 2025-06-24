@@ -24,6 +24,12 @@
 
     # Siriの音声トリガーを無効化
     /usr/bin/defaults write com.apple.Siri VoiceTriggerUserEnabled -bool false
+
+    # Spotlightのメニューアイコンを非表示
+    /usr/bin/defaults write com.apple.Spotlight "NSStatusItem Visible Item-0" -bool false
+
+    # Wifiのメニューアイコンを非表示
+    /usr/bin/defaults write com.apple.controlcenter "NSStatusItem Visible WiFi" -bool false
   '';
 
 }

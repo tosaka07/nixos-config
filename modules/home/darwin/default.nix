@@ -12,6 +12,8 @@
 {
   imports = [
     ../base
+    ./programs/ghostty.nix
+    ./programs/aerospace.nix
   ];
 
   programs.home-manager.enable = true;
@@ -31,12 +33,13 @@
     ice-bar
     chatgpt
     vscode
-    aerospace
+
     brewCasks.ghostty
     brewCasks.obs
     brewCasks.cursor
     brewCasks.arc
     brewCasks.battery
     brewCasks.aqua-voice
+    brewCasks.loop
   ];
 }

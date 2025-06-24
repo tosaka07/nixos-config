@@ -36,10 +36,10 @@ nix shell nixpkgs#go-task -c task apply
 task apply
 ```
 
-現状、ログインシェルの変更は手動で行わないといけないっぽいのです。
+現状、ログインシェルの変更は手動で行わないといけないっぽいです。
 
 ```sh
-chsh -s /run/current-system/sw/bin/fish
+chsh -s /run/current-system/sw/bin/{whatever}
 ```
 
 ## フォルダ構成
@@ -60,13 +60,15 @@ chsh -s /run/current-system/sw/bin/fish
     ├── home/              # Home-manager設定
     │   ├── base/          # 全システム共通のhome設定
     │   │   ├── default.nix        # 基本パッケージとインポート
-    │   │   └── shell/             # シェル設定
+    │   │   └── programs/          # プログラム設定
     │   │       ├── fish/          # Fishシェル設定
     │   │       ├── git/           # Git設定
     │   │       ├── ssh/           # SSH設定
     │   │       └── mise/          # Mise（ランタイムマネージャー）設定
     │   └── darwin/        # macOS固有のhome設定
-    │       └── default.nix        # macOS用GUIアプリケーション
+    │       ├── default.nix        # macOS用GUIアプリケーション
+    │       └── programs/          # macOS専用プログラム設定
+    │           └── ghostty/       # Ghosttyターミナル設定
     ├── hosts/             # ホスト固有の設定
     │   └── CA-20033730/   # 特定のホスト名用設定
     │       └── default.nix
@@ -91,14 +93,14 @@ task gc-all  # すべての古い世代を削除（現在の世代のみ保持�
 
 ## 主な機能
 
-- **Determinate Nix統合**: 
-  - 自動ガベージコレクション
-  - Fishシェル補完
-  - 優れたNix体験をすぐに利用可能
-- **Fishシェル**: Tideプロンプトと便利なプラグイン設定済み
-- **開発ツール**: mise、git、neovim、各種CLIツール
-- **macOSデフォルト設定**: システム環境設定の自動構成
-- **Homebrew統合**: formulaとcaskをNixで管理
+-   **Determinate Nix 統合**:
+    -   自動ガベージコレクション
+    -   Fish シェル補完
+    -   優れた Nix 体験をすぐに利用可能
+-   **Fish シェル**: Tide プロンプトと便利なプラグイン設定済み
+-   **開発ツール**: mise、git、neovim、各種 CLI ツール
+-   **macOS デフォルト設定**: システム環境設定の自動構成
+-   **Homebrew 統合**: formula と cask を Nix で管理
 
 ## Mac 設定
 
