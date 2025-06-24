@@ -15,6 +15,8 @@
       "craft"
       "orbstack"
       "mimestream"
+      "cloudflare-warp"
+      "karabiner-elements"
     ];
   };
 }

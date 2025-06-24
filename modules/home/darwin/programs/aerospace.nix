@@ -42,6 +42,7 @@
         ctrl-space = [ "mode switch" ];
         cmd-h = [ ]; # Disable "hide application"
         cmd-alt-h = [ ]; # Disable "hide others"
+        f19 = [ "mode switch" ]; # Use F19 as a fallback for mode switch
 
         # Hyper Key (cmd-alt-ctrl-shift)
         cmd-alt-ctrl-shift-space = [ "workspace-back-and-forth" ];
@@ -365,6 +366,10 @@
             window-title-regex-substring = "^(?!Space)";
           };
           check-further-callbacks = true;
+          run = "layout tiling";
+        }
+        {
+          "if".app-id = "com.mitchellh.ghostty";
           run = "layout tiling";
         }
       ];
