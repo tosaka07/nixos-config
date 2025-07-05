@@ -15,6 +15,7 @@
     ./programs/ghostty.nix
     ./programs/aerospace.nix
     ./programs/karabiner.nix
+    ./programs/zed-editor.nix
   ];
 
   programs.home-manager.enable = true;
@@ -41,8 +42,8 @@
     brewCasks.arc
     brewCasks.battery
     brewCasks.aqua-voice
-    brewCasks.loop
     brewCasks.shottr
     brewCasks.iina
+    brewCasks.obsidian
   ];
 }

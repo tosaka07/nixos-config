@@ -89,6 +89,10 @@
       # tag
       t = "tag -n";
 
+      # worktree
+      w = "worktree";
+      wa = "worktree add .git/worktrees -b";
+
       # list
       aliases = "!git config --get-regexp alias | sed 's/^alias.//g' | sed 's/ / = /1'";
 
@@ -160,6 +164,7 @@
       };
 
       diff = {
+        external = "difft";
         mnemonicprefix = true;
         algorithm = "patience";
       };

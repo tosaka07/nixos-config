@@ -9,9 +9,9 @@ eval (/opt/homebrew/bin/brew shellenv)
 # ----------------------------------------------
 # Determinate Nixd completion
 # ----------------------------------------------
-if command -q determinate-nixd
-    eval "$(determinate-nixd completion fish)"
-end
+# if command -q determinate-nixd
+#     eval "$(determinate-nixd completion fish)"
+# end
 
 # ----------------------------------------------
 # Path
@@ -166,6 +166,24 @@ function git_branch_fzf -d "Check out new branch"
     commandline -f repaint
 end
 alias gitb git_branch_fzf
+
+function wt -d "Git worktree management (use tmux C-Space C-w)"
+    if test -n "$TMUX"
+        echo "Use tmux keybind: C-Space C-w"
+        tmux send-keys C-Space C-w
+    else
+        echo "This command requires tmux. Please run in a tmux session."
+        echo "After starting tmux, use: C-Space C-w"
+    end
+end
+
+function cc -d "Create tmux pane on right with 30% width and launch claude"
+    if test -n "$TMUX"
+        tmux split-window -h -l 30% claude
+    else
+        echo "Not in a tmux session"
+    end
+end
 
 function aicommit -d "Generate commit message"
     set prompt """

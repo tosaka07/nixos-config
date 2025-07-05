@@ -9,7 +9,7 @@
   # Ghosttyの設定ファイルのみを管理（パッケージはbrewCasksから）
   xdg.configFile."ghostty/config".text = ''
     theme = catppuccin-mocha
-    font-size = 16
+    font-size = 10
     font-family = UDEV Gothic 35NF
     font-feature = -calt
     font-feature = -liga

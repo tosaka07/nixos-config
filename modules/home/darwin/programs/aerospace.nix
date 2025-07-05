@@ -39,43 +39,9 @@
       };
 
       mode.main.binding = {
-        ctrl-space = [ "mode switch" ];
         cmd-h = [ ]; # Disable "hide application"
         cmd-alt-h = [ ]; # Disable "hide others"
         f19 = [ "mode switch" ]; # Use F19 as a fallback for mode switch
-
-        # Hyper Key (cmd-alt-ctrl-shift)
-        cmd-alt-ctrl-shift-space = [ "workspace-back-and-forth" ];
-        cmd-alt-ctrl-shift-1 = [ "workspace 1" ];
-        cmd-alt-ctrl-shift-2 = [ "workspace 2" ];
-        cmd-alt-ctrl-shift-3 = [ "workspace 3" ];
-        cmd-alt-ctrl-shift-4 = [ "workspace 4" ];
-        cmd-alt-ctrl-shift-5 = [ "workspace 5" ];
-        cmd-alt-ctrl-shift-6 = [ "workspace 6" ];
-        cmd-alt-ctrl-shift-7 = [ "workspace 7" ];
-        cmd-alt-ctrl-shift-8 = [ "workspace 8" ];
-        cmd-alt-ctrl-shift-9 = [ "workspace 9" ];
-        cmd-alt-ctrl-shift-0 = [ "workspace 0" ];
-        cmd-alt-ctrl-shift-h = [ "focus left" ];
-        cmd-alt-ctrl-shift-j = [ "focus down" ];
-        cmd-alt-ctrl-shift-k = [ "focus up" ];
-        cmd-alt-ctrl-shift-l = [ "focus right" ];
-        cmd-alt-ctrl-shift-z = [
-          "fullscreen"
-          "mode main"
-        ];
-        cmd-alt-ctrl-shift-t = [
-          "layout tiles horizontal vertical"
-          "mode main"
-        ];
-        cmd-alt-ctrl-shift-a = [
-          "layout accordion horizontal vertical"
-          "mode main"
-        ];
-        cmd-alt-ctrl-shift-f = [
-          "layout floating tiling"
-          "mode main"
-        ];
       };
 
       mode.switch.binding = {
@@ -88,10 +54,6 @@
           "mode main"
         ];
         space = [
-          "workspace-back-and-forth"
-          "mode main"
-        ];
-        ctrl-space = [
           "workspace-back-and-forth"
           "mode main"
         ];

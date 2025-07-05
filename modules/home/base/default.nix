@@ -7,12 +7,14 @@
 {
   imports = [
     ./programs/fish/fish.nix
+    ./programs/zellij/zellij.nix
     ./programs/atuin.nix
     ./programs/bat.nix
     ./programs/git.nix
     ./programs/gitui.nix
     ./programs/mise.nix
     ./programs/ssh.nix
+    ./programs/tmux/tmux.nix
   ];
 
   # Allow unfree packages for this user
@@ -36,6 +38,12 @@
     nixfmt-rfc-style
     google-cloud-sdk
     trash-cli
+    zellij
+    glow
+    ngrok
+    yt-dlp
+    difftastic
+    hyperfine
 
     # fonts
     udev-gothic-nf

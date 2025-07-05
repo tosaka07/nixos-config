@@ -19,7 +19,7 @@
                   from = {
                     key_code = "spacebar";
                     modifiers = {
-                      optional = [ "any" ];
+                      mandatory = [ ];
                     };
                   };
                   to_if_alone = [
@@ -30,10 +30,11 @@
                   to_if_held_down = [
                     {
                       key_code = "f19";
+                      repeat = false;
                     }
                   ];
                   parameters = {
-                    "basic.to_if_held_down_threshold_milliseconds" = 130;
+                    "basic.to_if_held_down_threshold_milliseconds" = 200;
                   };
                 }
               ];

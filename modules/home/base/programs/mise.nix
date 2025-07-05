@@ -15,6 +15,9 @@
         ANTHROPIC_VERTEX_PROJECT_ID = "inhouse-ai-tapple";
         ANTHROPIC_MODEL = "claude-opus-4@20250514";
         ANTHROPIC_SMALL_FAST_MODEL = "claude-sonnet-4@20250514";
+        GOOGLE_CLOUD_PROJECT = "inhouse-ai-tapple";
+        GOOGLE_CLOUD_LOCATION = "us-central1";
+        GOOGLE_GENAI_USE_VERTEXAI = true;
       };
       tools = {
         flutter = "3.16.5-stable";
@@ -22,17 +25,18 @@
         node = "20.11.0";
         bun = "latest";
         python = "latest";
-        bitwarden = "latest";
         uv = "latest";
         rust = "latest";
         "npm:opencommit" = "latest";
         "npm:@openai/codex" = "latest";
         "npm:@anthropic-ai/claude-code" = "latest";
+        "npm:@google/gemini-cli" = "latest";
         "npm:ccusage" = "latest";
         "pipx:posting" = "latest";
         "cargo:gitu" = "latest";
       };
       settings = {
+        idiomatic_version_file_enable_tools = [ ];
         experimental = true;
         pipx.uvx = true;
         npm.bun = true;
