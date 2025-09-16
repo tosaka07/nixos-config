@@ -61,9 +61,9 @@
   };
 
   system.defaults.screencapture = {
-    type = "jpg";
+    type = "png";
     # Screenshot location
-    location = "~/Pictures/Screenshot";
+    location = "~/Pictures/Screenshots";
     # name = "Screenshot";
     show-thumbnail = false;
   };

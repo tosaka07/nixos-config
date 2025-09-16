@@ -8,8 +8,8 @@
 {
   # Ghosttyの設定ファイルのみを管理（パッケージはbrewCasksから）
   xdg.configFile."ghostty/config".text = ''
-    theme = catppuccin-mocha
-    font-size = 10
+    theme = Catppuccin Mocha
+    font-size = 11
     font-family = UDEV Gothic 35NF
     font-feature = -calt
     font-feature = -liga
@@ -20,5 +20,7 @@
     window-padding-x = 8
     window-padding-y = 8
     keybind = shift+enter=text:\n
+    keybind = global:ctrl+grave_accent=toggle_quick_terminal
+    macos-titlebar-style = hidden
   '';
 }

@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # homebrew 自体を Nix で管理するためのモジュール
     nix-homebrew = {
       url = "github:zhaofengli/nix-homebrew";
@@ -24,21 +29,8 @@
       flake = false;
     };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Homebrew のパッケージを直接取得してnixで管理するモジュール
-    brew-nix = {
-      url = "github:BatteredBunny/brew-nix";
-      inputs.nix-darwin.follows = "nix-darwin";
-      inputs.brew-api.follows = "brew-api";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    brew-api = {
-      url = "github:BatteredBunny/brew-api";
+    laishulu-homebrew-homebrew = {
+      url = "github:laishulu/homebrew-homebrew";
       flake = false;
     };
   };
@@ -48,22 +40,22 @@
       self,
       nixpkgs,
       nix-darwin,
-      brew-nix,
       home-manager,
       nix-homebrew,
       homebrew-core,
       homebrew-cask,
+      laishulu-homebrew-homebrew,
       ...
     }:
     let
       mkDarwinSystem = import ./modules/shared/mkDarwinSystem.nix {
         inherit
           nix-darwin
-          brew-nix
           home-manager
           nix-homebrew
           homebrew-core
           homebrew-cask
+          laishulu-homebrew-homebrew
           ;
       };
     in

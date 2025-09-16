@@ -23,6 +23,7 @@
   # Common CLI packages for all systems
   home.packages = with pkgs; [
     jq
+    yq
     fzf
     fd
     ripgrep
@@ -44,6 +45,19 @@
     yt-dlp
     difftastic
     hyperfine
+    ghostscript
+    _1password-cli
+    ffmpeg
+    devcontainer
+    dasel
+    codex
+    claude-code
+    opencode
+    yazi
+
+    # languages
+    nixd
+    nil
 
     # fonts
     udev-gothic-nf

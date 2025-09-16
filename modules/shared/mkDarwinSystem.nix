@@ -1,10 +1,10 @@
 {
   nix-darwin,
-  brew-nix,
   home-manager,
   nix-homebrew,
   homebrew-core,
   homebrew-cask,
+  laishulu-homebrew-homebrew,
 }:
 {
   hostname,
@@ -17,8 +17,6 @@ nix-darwin.lib.darwinSystem {
     inherit hostname username system;
   };
   modules = [
-    brew-nix.darwinModules.default
-
     # Common user system configuration
     ../users/base.nix
 
@@ -38,6 +36,7 @@ nix-darwin.lib.darwinSystem {
         taps = {
           "homebrew/homebrew-core" = homebrew-core;
           "homebrew/homebrew-cask" = homebrew-cask;
+          "laishulu/homebrew-homebrew" = laishulu-homebrew-homebrew;
         };
         mutableTaps = false;
       };
@@ -52,7 +51,6 @@ nix-darwin.lib.darwinSystem {
       home-manager.extraSpecialArgs = {
         inherit hostname username system;
       };
-
 
       home-manager.users.${username} = import ../users/${username} {
         inherit hostname username system;

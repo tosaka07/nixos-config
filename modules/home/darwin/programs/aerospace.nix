@@ -343,8 +343,8 @@
         "4" = "main";
         "5" = "main";
         "6" = "main";
-        "7" = "main";
-        "8" = "^DeskPad Display";
+        "7" = "3";
+        "8" = "3";
         "9" = "secondary";
         "0" = "secondary";
       };

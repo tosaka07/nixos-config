@@ -26,24 +26,14 @@
 
   # GUI applications for macOS
   home.packages = with pkgs; [
-    firefox
-    zoom-us
-    discord
-    raycast
-    xcodes
-    slack
-    ice-bar
-    chatgpt
-    vscode
-
-    brewCasks.ghostty
-    brewCasks.obs
-    brewCasks.cursor
-    brewCasks.arc
-    brewCasks.battery
-    brewCasks.aqua-voice
-    brewCasks.shottr
-    brewCasks.iina
-    brewCasks.obsidian
+    terminal-notifier
+    # zoom-us
+    # discord
+    # raycast
+    # xcodes
+    # slack
+    # ice-bar
+    # chatgpt
+    # vscode
   ];
 }
