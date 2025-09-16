@@ -4,103 +4,88 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## System Overview
 
-This is a NixOS configuration repository for macOS (Darwin) that manages system settings, packages, and dotfiles using Nix flakes. The configuration targets hostname `CA-20033730` for user `y41153`.
+This is a Nix Darwin configuration repository for macOS that manages system settings, packages, and dotfiles using Nix flakes with Determinate Nix. The configuration dynamically detects the hostname using `$(hostname)` for flexibility.
 
 ## Essential Commands
 
 ### Building and Applying Configuration
 
-task apply にはユーザーのパスワードが必要なため、Claude Code 自体はコードを実行せず、ユーザーに手元で実行するよう促してください。
+**Important**: `task apply` requires sudo privileges. Claude Code cannot execute this directly - prompt the user to run it locally.
 
 ```bash
-# Build and apply the complete Nix Darwin configuration
+# Primary method - Build and apply Darwin configuration
 task apply
-# or
-make apply
 
-# Manual build and apply (equivalent to above)
-nix build .#darwinConfigurations.CA-20033730.system --extra-experimental-features 'nix-command flakes'
-sudo ./result/sw/bin/darwin-rebuild switch --flake ".#CA-20033730"
+# Alternative commands available
+task gc          # Garbage collection (delete generations older than 30 days)
+task gc-all      # Delete all old generations (keep only current)
+task update      # Update all flake inputs
+task update-nixpkgs  # Update only nixpkgs
+task upgrade-nix     # Upgrade Determinate Nix
+
+# Manual equivalent of task apply
+nix build .#darwinConfigurations.$(hostname).system --extra-experimental-features 'nix-command flakes'
+sudo ./result/sw/bin/darwin-rebuild switch --flake ".#$(hostname)"
 ```
-
-### Development Tools
-
-The system includes mise for runtime version management. Key tools available:
-
--   `mise` - Runtime version manager (configured in `modules/home/base/programs/mise/mise.nix`)
--   `task` - Task runner (alias: `t`)
--   `nixfmt-rfc-style` - Nix code formatting
 
 ## Architecture
 
-### Core Structure
+### Module System Pattern
 
--   `flake.nix` - Main flake configuration with inputs and Darwin system definition
--   `modules/` - Modular configuration components
-    -   `home/base/programs/` - Cross-platform program configurations
-        -   `fish/` - Fish shell configuration with custom functions and aliases
-        -   `mise/` - Development environment configuration
-        -   `git/` - Git configuration
-        -   `ssh/` - SSH configuration
-    -   `home/darwin/programs/` - macOS-specific program configurations
-        -   `ghostty/` - Ghostty terminal emulator configuration
+This configuration uses a consistent pattern for passing system parameters (`hostname`, `username`, `system`) to modules:
 
-### Package Management
+1. **mkDarwinSystem helper** (`modules/shared/mkDarwinSystem.nix`): Factory function that creates Darwin systems
+2. **Direct parameter passing**: Modules explicitly declare and receive parameters
+3. **Module imports**: Always use `import ./module { inherit hostname username system; }`
 
-The system uses multiple package sources:
-
--   Nix packages (primary source)
--   Homebrew casks (managed via nix-homebrew)
--   brew-nix for direct Homebrew package integration
-
-### Key Modules
-
--   **nix-darwin**: macOS system configuration
--   **home-manager**: User environment and dotfile management
--   **nix-homebrew**: Homebrew integration
--   **brew-nix**: Direct Homebrew package access
-
-### Module Arguments Handling
-
-This configuration passes system-specific values (`hostname`, `username`, `system`) directly to modules. The consistent pattern is:
-
-1. **Direct declaration**: Modules that need these values must explicitly declare them in their first parameter set
-2. **Explicit passing**: When importing modules, always pass these arguments explicitly using `import ./module { inherit hostname username system; }`
-3. **No implicit usage**: Never rely on these variables being available through `specialArgs` or module system magic
-
-Example:
+Example module structure:
 ```nix
+# First parameter set: system parameters
 { hostname, username, system }:
+# Second parameter set: standard Nix module arguments
 { config, lib, pkgs, ... }:
 {
-  # Module configuration using hostname, username, system
+  # Module configuration
 }
 ```
 
-### Shell Environment
+### Directory Structure
 
-Fish shell is configured with:
+```
+modules/
+├── darwin/              # macOS system-level configuration
+│   ├── default.nix      # Main Darwin module entry point
+│   ├── homebrew.nix     # Homebrew packages and casks management
+│   ├── system-defaults.nix  # macOS defaults (Dock, Finder, etc.)
+│   ├── activation-scripts.nix  # System activation hooks
+│   └── nixpkgs.nix      # Nixpkgs configuration
+├── home/                # User environment configuration
+│   ├── base/            # Cross-platform home configurations
+│   │   ├── default.nix  # Base packages and imports
+│   │   └── programs/    # Program configurations (fish, git, mise, tmux, etc.)
+│   └── darwin/          # macOS-specific home configurations
+│       ├── default.nix  # GUI applications and macOS tools
+│       └── programs/    # macOS-specific programs (ghostty, aerospace, karabiner, zed)
+├── hosts/               # Host-specific configurations
+│   └── CA-20033730/     # Example host configuration
+├── users/               # User-specific configurations
+│   ├── base.nix         # Common user system settings
+│   └── y41153/          # Example user configuration
+└── shared/              # Shared utilities
+    └── mkDarwinSystem.nix  # Darwin system builder function
+```
 
--   Tide prompt (auto-configured during home-manager activation)
--   Custom key bindings for directory navigation (Shift+arrows)
--   FZF integration for fuzzy searching
--   Custom functions for git branch switching, ghq repository navigation
--   AI-powered commit message generation (`aicommit` function)
+### Key Technologies
+
+- **Determinate Nix**: Enhanced Nix installer with auto-GC and improved UX
+- **nix-darwin**: macOS system configuration management
+- **home-manager**: User environment and dotfile management
+- **nix-homebrew**: Declarative Homebrew package management through Nix
 
 ### Development Environment
 
-mise manages development runtimes including:
-
--   Node.js 20.11.0, Flutter 3.16.5-stable, Go, Python, Rust
--   Claude Code integration via Vertex AI (configured in mise.nix)
-
-### System Defaults
-
-The configuration sets opinionated macOS defaults including:
-
--   Dark mode interface
--   Show file extensions and hidden files
--   Custom dock settings (auto-hide, small icons)
--   Trackpad tap-to-click and three-finger drag
--   CapsLock remapped to Control
--   Custom screenshot settings (JPG format, custom location)
+- **Shell**: Fish with Tide prompt, custom functions, and FZF integration
+- **Runtime Management**: mise for Node.js, Python, Go, Rust, Flutter
+- **Terminal**: Ghostty, tmux, zellij configurations
+- **Editor Integration**: Zed Editor, gitui configurations
+- **Task Runner**: go-task (aliased as `t`)
