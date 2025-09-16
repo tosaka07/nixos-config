@@ -47,9 +47,6 @@
           set -ag status-right "#{E:@catppuccin_status_user}"
           set -ag status-right "#{E:@catppuccin_status_host}"
           set -ag status-right "#{E:@catppuccin_status_session}"
-
-          set -g @catppuccin_pane_status_enabled "yes"
-          set -g @catppuccin_pane_border_status "yes"
         '';
       }
     ];

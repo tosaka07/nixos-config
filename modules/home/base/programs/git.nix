@@ -222,6 +222,10 @@
       include = {
         path = ".gitconfig.user";
       };
+
+      # worktree = {
+      #   useRelativePaths = true;
+      # };
     };
   };
 }

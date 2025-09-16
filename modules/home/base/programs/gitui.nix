@@ -6,7 +6,7 @@
 }:
 {
   programs.gitui = {
-    enable = true;
+    enable = false;
     keyConfig = ''
       open_help: Some(( code: F(1), modifiers: "")),
 
