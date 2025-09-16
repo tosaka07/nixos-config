@@ -82,7 +82,7 @@ if type -q zoxide
 end
 
 # ----------------------------------------------
-# Library: zoxide
+# Library: gitui
 # ----------------------------------------------
 if type -q gitui
     alias gitui="gitui -t mocha.ron"
@@ -109,6 +109,26 @@ end
 if type -q task
     alias t="task"
 end
+
+# ----------------------------------------------
+# Library: Orbstack
+# ----------------------------------------------
+if type -q orb
+    source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+end
+
+# ----------------------------------------------
+# Library: pnpm
+# ----------------------------------------------
+set -gx PNPM_HOME ~/Library/pnpm
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
+
+# ----------------------------------------------
+# Library: 1password
+# ----------------------------------------------
+set -gx SSH_AUTH_SOCK ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
 # ----------------------------------------------
 # Functions
@@ -295,13 +315,109 @@ function fuzzy_complete
     commandline -f end-of-line
 end
 
-# Added by OrbStack: command-line tools and integration
-# This won't be added again if you remove it.
-source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+# 1Password環境変数読み込み関数
+function opr -d "Run command with 1Password environment variables"
+    # Check if user is signed in to 1Password
+    op whoami >/dev/null 2>&1
+    if test $status -ne 0
+        eval (op signin)
+    end
 
-# pnpm
-set -gx PNPM_HOME ~/Library/pnpm
-if not string match -q -- $PNPM_HOME $PATH
-    set -gx PATH "$PNPM_HOME" $PATH
+    # Use local .env if exists, otherwise use global env file
+    if test -f "$PWD/.env"
+        op run --env-file=$PWD/.env -- $argv
+    else
+        # Using home directory as default global env location
+        set -l global_env "$HOME/nixos-config/.env.op"
+        if test -f "$global_env"
+            op run --env-file=$global_env -- $argv
+        else
+            echo "Warning: No global .env.1password found at $global_env"
+            echo "Running without env file..."
+            op run -- $argv
+        end
+    end
 end
-# pnpm end
+
+function gcfg -d "Activate gcloud config and sync ADC quota-project"
+    set config (gcloud config configurations list --format="value(name)" | fzf --prompt="Choose config > ")
+    if test -n "$config"
+        # Activate the selected config
+        gcloud config configurations activate $config
+        echo "Switched to gcloud config: $config"
+
+        # Fetch project of the activated config
+        set project_id (gcloud config get-value project 2>/dev/null)
+
+        # If project is set, sync ADC quota-project to avoid quota mismatch warning
+        if test -n "$project_id"; and not string match -q "(unset)" "$project_id"
+            gcloud auth application-default set-quota-project "$project_id"
+            echo "Updated ADC quota-project -> $project_id"
+        else
+            echo "Warning: Active config has no project set. Skipped ADC quota-project update."
+        end
+    else
+        echo "No config selected"
+    end
+end
+
+# 自作コマンド/関数ランチャ（選択→入力欄に挿入のみ）
+function hey -d "Pick custom cmds/functions with fzf and insert"
+    set -l items \
+        "gcfg\tgcloud config切替+ADC quota-project同期" \
+        "opr <CMD>\t1Passwordのenvでコマンド実行" \
+        "ghq_cd_fzf\tghq管理リポジトリへcd" \
+        "zoxide_fzf\tzoxideでディレクトリジャンプ" \
+        "gitb\tブランチを選択してcheckout" \
+        "wt\ttmuxのworktree UI起動ヒント" \
+        "cc\ttmux右ペインでclaude起動" \
+        "aicommit\tAIでコミットメッセージ生成" \
+        "aicommit_test\tAIコミットメッセージのプレビュー" \
+        "misef\tmiseのツールを選択してuse追加" \
+        "cdd\t子ディレクトリにfzfでcd" \
+        "history_fzf\t履歴からコマンド拾って挿入" \
+        "fuzzy_complete\tfzfで実行可能を補完" \
+        "task apply\tNix Darwin 構成をビルド&適用" \
+        "task gc\t古い世代のGC" \
+        "task gc-all\t全古い世代を削除" \
+        "task update\tflakeの入力を更新" \
+        "task update-nixpkgs\tnixpkgsのみ更新" \
+        "task upgrade-nix\tDeterminate Nixをアップグレード"
+
+    # fzf オプションはリストとして安全に積む（fish は空白で分割しない）
+    set -l fzf_common_opts \
+        --with-nth=1 \
+        '--delimiter=\t' \
+        "--prompt=hey > " \
+        --preview 'echo {} | cut -f2-' \
+        --preview-window=down,30%,sharp
+
+    # 互換性: 古い fzf では --ansi / --layout / --cycle が無い場合がある
+    set -l fzf_help (fzf --help 2>/dev/null)
+    if test $status -eq 0
+        if string match -q '*--ansi*' -- $fzf_help
+            set -a fzf_common_opts --ansi
+        end
+        if string match -q '*--layout=*' -- $fzf_help
+            set -a fzf_common_opts --layout=reverse
+        else if string match -q '*--reverse*' -- $fzf_help
+            # 旧バージョンの互換フラグ
+            set -a fzf_common_opts --reverse
+        end
+        if string match -q '*--cycle*' -- $fzf_help
+            set -a fzf_common_opts --cycle
+        end
+    end
+
+    if test -n "$TMUX"; and type -q fzf-tmux
+        set -l sel (printf "%s\n" $items | fzf-tmux -p 80% $fzf_common_opts)
+    else
+        set -l sel (printf "%s\n" $items | fzf --height 80% $fzf_common_opts)
+    end
+
+    if test -n "$sel"
+        set -l cmd (echo $sel | cut -f1)
+        commandline -r -- "$cmd "
+        commandline -f end-of-line
+    end
+end
