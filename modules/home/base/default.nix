@@ -17,9 +17,6 @@
     ./programs/tmux/tmux.nix
   ];
 
-  # Allow unfree packages for this user
-  nixpkgs.config.allowUnfree = true;
-
   # Common CLI packages for all systems
   home.packages = with pkgs; [
     jq

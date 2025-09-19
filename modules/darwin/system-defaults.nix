@@ -78,6 +78,7 @@
   system.keyboard = {
     # CapsLock to Control
     remapCapsLockToControl = true;
+    enableKeyMapping = true;
   };
 
   system.defaults.NSGlobalDomain = {

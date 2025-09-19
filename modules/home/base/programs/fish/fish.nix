@@ -18,7 +18,11 @@ in
 
   # Darwin-specific home configuration
   home.activation.configure-tide = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Dotted --prompt_spacing=Compact --icons='Many icons' --transient=No"
+    if ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Dotted --prompt_spacing=Compact --icons='Many icons' --transient=No" 2>/dev/null; then
+      echo "Tide configured successfully"
+    else
+      echo "Tide configuration skipped (will be configured on first interactive session)"
+    fi
   '';
 
   programs.fish = {

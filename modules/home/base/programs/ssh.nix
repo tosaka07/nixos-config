@@ -7,7 +7,8 @@
 {
   programs.ssh = {
     enable = true;
-    
+    enableDefaultConfig = false;
+
     # Common SSH configuration for all systems
     includes = [
       "~/.orbstack/ssh/config"
