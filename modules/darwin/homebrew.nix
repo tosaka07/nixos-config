@@ -41,6 +41,10 @@
       "ollama-app"
       "xcodes-app"
       "microsoft-edge"
+      "hammerspoon"
+      "microsoft-teams"
+      "microsoft-outlook"
+      "localsend"
     ];
   };
 }
