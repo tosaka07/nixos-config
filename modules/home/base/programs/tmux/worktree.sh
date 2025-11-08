@@ -97,4 +97,3 @@ tmux new-window -n "$clean_branch" -c "$worktree_path"
 tmux send-keys -t "$clean_branch" vim C-m
 tmux split-window -h -l 30% -t "$clean_branch" -c "$worktree_path" claude
 tmux select-pane -t "$clean_branch.0"
-

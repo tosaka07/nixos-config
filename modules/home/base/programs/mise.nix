@@ -25,7 +25,7 @@
         rust = "latest";
         # "npm:opencommit" = "latest";
         # "npm:@openai/codex" = "latest";
-        # "npm:@anthropic-ai/claude-code" = "1.0.55";
+        # "npm:@anthropic-ai/claude-code" = "latest";
         # "npm:@google/gemini-cli" = "latest";
         # "npm:ccusage" = "latest";
         # "npm:ccmanager" = "latest";
