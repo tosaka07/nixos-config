@@ -7,105 +7,108 @@
 {
   programs.git = {
     enable = true;
-    userName = "tosaka07";
-    userEmail = "tosakaup@gmail.com";
 
     signing = {
       key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOvcAZ9jZqsuhal3eUhcz3TCztfXaUfv5XqH+bmdZ2Dv";
       signByDefault = true;
     };
 
-    aliases = {
-      # add
-      a = "add";
-      chunkyadd = "add --patch";
+    settings = {
+      user = {
+        name = "tosaka07";
+        email = "tosakaup@gmail.com";
+      };
 
-      # snapshots
-      snapshot = "!git stash save \"snapshot: $(date)\" && git stash apply \"stash@{0}\"";
-      snapshots = "!git stash list --grep snapshot";
+      alias = {
+        # add
+        a = "add";
+        chunkyadd = "add --patch";
 
-      # branches
-      recent-branches = "!git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
-      b = "branch -v";
+        # snapshots
+        snapshot = "!git stash save \"snapshot: $(date)\" && git stash apply \"stash@{0}\"";
+        snapshots = "!git stash list --grep snapshot";
 
-      # commit
-      c = "commit -m";
-      ca = "commit -am";
-      ci = "commit";
-      amend = "commit --amend";
-      ammend = "commit --amend";
+        # branches
+        recent-branches = "!git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'";
+        b = "branch -v";
 
-      # checkout
-      co = "checkout";
-      nb = "checkout -b";
+        # commit
+        c = "commit -m";
+        ca = "commit -am";
+        ci = "commit";
+        amend = "commit --amend";
+        ammend = "commit --amend";
 
-      # cherry-pick
-      cp = "cherry-pick -x";
+        # checkout
+        co = "checkout";
+        nb = "checkout -b";
 
-      # diff
-      d = "diff";
-      dc = "diff --cached";
-      last = "diff HEAD^";
-      ds0 = "diff stash@{0}";
-      ds1 = "diff stash@{1}";
-      ds2 = "diff stash@{2}";
+        # cherry-pick
+        cp = "cherry-pick -x";
 
-      # log
-      l = "log --graph --date=short";
-      changes = "log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status";
-      short = "log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"";
-      simple = "log --pretty=format:\" * %s\"";
-      shortnocolor = "log --pretty=format:\"%h %cr %cn %s\"";
+        # diff
+        d = "diff";
+        dc = "diff --cached";
+        last = "diff HEAD^";
+        ds0 = "diff stash@{0}";
+        ds1 = "diff stash@{1}";
+        ds2 = "diff stash@{2}";
 
-      # pull/push
-      pl = "pull";
-      ps = "push";
+        # log
+        l = "log --graph --date=short";
+        changes = "log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status";
+        short = "log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"";
+        simple = "log --pretty=format:\" * %s\"";
+        shortnocolor = "log --pretty=format:\"%h %cr %cn %s\"";
 
-      # rebase
-      rc = "rebase --continue";
-      rs = "rebase --skip";
+        # pull/push
+        pl = "pull";
+        ps = "push";
 
-      # remote
-      r = "remote -v";
+        # rebase
+        rc = "rebase --continue";
+        rs = "rebase --skip";
 
-      # reset
-      unstage = "reset HEAD";
-      uncommit = "reset --soft HEAD^";
-      filelog = "log -u";
-      mt = "mergetool";
+        # remote
+        r = "remote -v";
 
-      # stash
-      ss = "stash save";
-      sl = "stash list";
-      sa = "stash apply";
-      sd = "stash drop";
-      sp = "stash pop";
+        # reset
+        unstage = "reset HEAD";
+        uncommit = "reset --soft HEAD^";
+        filelog = "log -u";
+        mt = "mergetool";
 
-      # status
-      s = "status";
-      st = "status";
-      stat = "status";
+        # stash
+        ss = "stash save";
+        sl = "stash list";
+        sa = "stash apply";
+        sd = "stash drop";
+        sp = "stash pop";
 
-      # tag
-      t = "tag -n";
+        # status
+        s = "status";
+        st = "status";
+        stat = "status";
 
-      # worktree
-      w = "worktree";
-      wa = "worktree add .git/worktrees -b";
+        # tag
+        t = "tag -n";
 
-      # list
-      aliases = "!git config --get-regexp alias | sed 's/^alias.//g' | sed 's/ / = /1'";
+        # worktree
+        w = "worktree";
+        wa = "worktree add .git/worktrees -b";
 
-      # svn helpers
-      svnr = "svn rebase";
-      svnd = "svn dcommit";
-      svnl = "svn log --oneline --show-commit";
+        # list
+        aliases = "!git config --get-regexp alias | sed 's/^alias.//g' | sed 's/ / = /1'";
 
-      # ローカルのみ残っている残りカスブランチを削除する
-      nifuramu = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|main'|xargs git branch -d; git fetch --prune; };f";
-    };
+        # svn helpers
+        svnr = "svn rebase";
+        svnd = "svn dcommit";
+        svnl = "svn log --oneline --show-commit";
 
-    extraConfig = {
+        # ローカルのみ残っている残りカスブランチを削除する
+        nifuramu = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|main'|xargs git branch -d; git fetch --prune; };f";
+      };
+
       color = {
         ui = true;
         branch = {
