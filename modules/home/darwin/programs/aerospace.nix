@@ -24,11 +24,9 @@
       # ];
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       automatically-unhide-macos-hidden-apps = true;
-
       key-mapping = {
         preset = "qwerty";
       };
-
       gaps = {
         inner.horizontal = 8;
         inner.vertical = 8;
@@ -42,6 +40,26 @@
         cmd-h = [ ]; # Disable "hide application"
         cmd-alt-h = [ ]; # Disable "hide others"
         f19 = [ "mode switch" ]; # Use F19 as a fallback for mode switch
+        # Fixed the placement of mode.main.binding
+        ctrl-alt-shift-cmd-space = "workspace-back-and-forth";
+        ctrl-alt-shift-cmd-1 = "workspace 1";
+        ctrl-alt-shift-cmd-2 = "workspace 2";
+        ctrl-alt-shift-cmd-3 = "workspace 3";
+        ctrl-alt-shift-cmd-4 = "workspace 4";
+        ctrl-alt-shift-cmd-5 = "workspace 5";
+        ctrl-alt-shift-cmd-6 = "workspace 6";
+        ctrl-alt-shift-cmd-7 = "workspace 7";
+        ctrl-alt-shift-cmd-8 = "workspace 8";
+        ctrl-alt-shift-cmd-9 = "workspace 9";
+        ctrl-alt-shift-cmd-0 = "workspace 0";
+        ctrl-alt-shift-cmd-n = "workspace next";
+        ctrl-alt-shift-cmd-p = "workspace prev";
+        ctrl-alt-shift-cmd-h = "focus left";
+        ctrl-alt-shift-cmd-j = "focus down"; # Added new binding for hyper-j
+        ctrl-alt-shift-cmd-k = "focus up"; # Added new binding for hyper-k
+        ctrl-alt-shift-cmd-l = "focus right"; # Added new binding for hyper-l
+        ctrl-alt-shift-cmd-w = "mode window";
+        ctrl-alt-shift-cmd-z = "fullscreen";
       };
 
       mode.switch.binding = {
@@ -279,6 +297,10 @@
         }
         {
           "if".app-id = "com.mimestream.Mimestream";
+          run = "move-node-to-workspace 1";
+        }
+        {
+          "if".app-id = "com.microsoft.teams2";
           run = "move-node-to-workspace 1";
         }
         {

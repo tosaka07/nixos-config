@@ -40,20 +40,31 @@
     };
     userKeymaps = [
       {
-        context = "Editor && vim_mode == normal && vim_operator == none && !VimWaiting";
+        context = "vim_mode == normal";
         bindings = {
-          "space e" = "workspace::ToggleLeftDock";
-          "space t" = "workspace::ToggleBottomDock";
-          "ctrl-s" = "workspace::Save";
-        };
-      }
-      {
-        context = "AgentPanel || GitPanel || ProjectPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView || DebugPanel";
-        bindings = {
+          # --- 🪟 ペイン移動 (Ctrl-g + hjkl) ---
           "ctrl-h" = "workspace::ActivatePaneLeft";
-          "ctrl-l" = "workspace::ActivatePaneRight";
-          "ctrl-k" = "workspace::ActivatePaneUp";
           "ctrl-j" = "workspace::ActivatePaneDown";
+          "ctrl-k" = "workspace::ActivatePaneUp";
+          "ctrl-l" = "workspace::ActivatePaneRight";
+
+          # --- 🪟 ペイン分割 (Ctrl-g + sv) ---
+          "ctrl-g s" = "pane::SplitDown";
+          "ctrl-g v" = "pane::SplitRight";
+
+          # --- 📑 タブ移動 (Shift + hl) ---
+          "shift-h" = "pane::ActivatePreviousItem";
+          "shift-l" = "pane::ActivateNextItem";
+
+          # --- 📑 タブ操作 (Ctrl-w) ---
+          "ctrl-w q" = "pane::CloseActiveItem";
+          "ctrl-w w" = "workspace::Save";
+
+          # --- 🗂 ファイルエクスプローラ開閉 (Space → e) ---
+          "space e" = "file_finder::Toggle";
+
+          # --- 💾 保存 (Ctrl + s) ---
+          "ctrl-s" = "workspace::Save";
         };
       }
     ];
