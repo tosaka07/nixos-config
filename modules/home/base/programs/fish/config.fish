@@ -142,15 +142,16 @@ function ghq_cd_fzf -d "Change dirctory to selected local repo managed by ghq."
     end
 
 end
-bind \cg ghq_cd_fzf
+bind ctrl-g ghq_cd_fzf
 
-function history_fzf -d "Fuzzy search history"
-    set -l input (commandline)
-    set cmd (history | fzf-tmux -p 80% -q "$input" --layout reverse)
-    if test -n "$cmd"
-        commandline -r -- "$cmd"
-    end
-end
+# Replace to atuin
+# function history_fzf -d "Fuzzy search history"
+#     set -l input (commandline)
+#     set cmd (history | fzf-tmux -p 80% -q "$input" --layout reverse)
+#     if test -n "$cmd"
+#         commandline -r -- "$cmd"
+#     end
+# end
 # bind \cr history_fzf
 
 function zoxide_fzf -d "Change directory to selected directory managed by zoxide"
@@ -265,19 +266,19 @@ function prevd_without_newline
     prevd >/dev/null
     commandline -f repaint
 end
-bind \e\[1\;2D prevd_without_newline
+bind shift-left prevd_without_newline
 
 function nextd_without_newline
     nextd >/dev/null
     commandline -f repaint
 end
-bind \e\[1\;2C nextd_without_newline
+bind shift-right nextd_without_newline
 
 function cd_parent_without_newline
     cd ..
     commandline -f repaint
 end
-bind \e\[1\;2A cd_parent_without_newline
+bind shift-up cd_parent_without_newline
 
 function cd_child_without_newline
     # Get all directories
@@ -299,7 +300,7 @@ function cd_child_without_newline
 
     commandline -f repaint
 end
-bind \e\[1\;2B cd_child_without_newline
+bind shift-down cd_child_without_newline
 
 function clia
     read -l line
@@ -307,13 +308,12 @@ function clia
     # commandline -a 
 end
 
-bind -M insert \et fuzzy_complete
-
 # 実行可能なコマンドをfzfで選択して実行する
 function fuzzy_complete
     complete -C | sort -u | fzf --height 40% --multi --reverse -q (commandline -t) | cut --output-delimiter ' ' -f1 | sed s/-//g | clia
     commandline -f end-of-line
 end
+bind --mode insert alt-t fuzzy_complete
 
 # 1Password環境変数読み込み関数
 function opr -d "Run command with 1Password environment variables"
@@ -358,66 +358,5 @@ function gcfg -d "Activate gcloud config and sync ADC quota-project"
         end
     else
         echo "No config selected"
-    end
-end
-
-# 自作コマンド/関数ランチャ（選択→入力欄に挿入のみ）
-function hey -d "Pick custom cmds/functions with fzf and insert"
-    set -l items \
-        "gcfg\tgcloud config切替+ADC quota-project同期" \
-        "opr <CMD>\t1Passwordのenvでコマンド実行" \
-        "ghq_cd_fzf\tghq管理リポジトリへcd" \
-        "zoxide_fzf\tzoxideでディレクトリジャンプ" \
-        "gitb\tブランチを選択してcheckout" \
-        "wt\ttmuxのworktree UI起動ヒント" \
-        "cc\ttmux右ペインでclaude起動" \
-        "aicommit\tAIでコミットメッセージ生成" \
-        "aicommit_test\tAIコミットメッセージのプレビュー" \
-        "misef\tmiseのツールを選択してuse追加" \
-        "cdd\t子ディレクトリにfzfでcd" \
-        "history_fzf\t履歴からコマンド拾って挿入" \
-        "fuzzy_complete\tfzfで実行可能を補完" \
-        "task apply\tNix Darwin 構成をビルド&適用" \
-        "task gc\t古い世代のGC" \
-        "task gc-all\t全古い世代を削除" \
-        "task update\tflakeの入力を更新" \
-        "task update-nixpkgs\tnixpkgsのみ更新" \
-        "task upgrade-nix\tDeterminate Nixをアップグレード"
-
-    # fzf オプションはリストとして安全に積む（fish は空白で分割しない）
-    set -l fzf_common_opts \
-        --with-nth=1 \
-        '--delimiter=\t' \
-        "--prompt=hey > " \
-        --preview 'echo {} | cut -f2-' \
-        --preview-window=down,30%,sharp
-
-    # 互換性: 古い fzf では --ansi / --layout / --cycle が無い場合がある
-    set -l fzf_help (fzf --help 2>/dev/null)
-    if test $status -eq 0
-        if string match -q '*--ansi*' -- $fzf_help
-            set -a fzf_common_opts --ansi
-        end
-        if string match -q '*--layout=*' -- $fzf_help
-            set -a fzf_common_opts --layout=reverse
-        else if string match -q '*--reverse*' -- $fzf_help
-            # 旧バージョンの互換フラグ
-            set -a fzf_common_opts --reverse
-        end
-        if string match -q '*--cycle*' -- $fzf_help
-            set -a fzf_common_opts --cycle
-        end
-    end
-
-    if test -n "$TMUX"; and type -q fzf-tmux
-        set -l sel (printf "%s\n" $items | fzf-tmux -p 80% $fzf_common_opts)
-    else
-        set -l sel (printf "%s\n" $items | fzf --height 80% $fzf_common_opts)
-    end
-
-    if test -n "$sel"
-        set -l cmd (echo $sel | cut -f1)
-        commandline -r -- "$cmd "
-        commandline -f end-of-line
     end
 end
