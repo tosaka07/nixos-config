@@ -45,6 +45,7 @@
       "microsoft-teams"
       "microsoft-outlook"
       "localsend"
+      "chatgpt-atlas"
     ];
   };
 }
