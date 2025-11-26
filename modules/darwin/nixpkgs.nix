@@ -2,9 +2,20 @@
   config,
   lib,
   pkgs,
+  claude-code-overlay,
   ...
 }:
 {
-  # システムレベルでunfreeパッケージを許可
-  nixpkgs.config.allowUnfree = true;
+  # claude-code-overlay を適用
+  nixpkgs.overlays = [
+    claude-code-overlay.overlays.default
+  ];
+
+  # unfree パッケージを個別に許可
+  nixpkgs.config.allowUnfreePredicate =
+    pkg: builtins.elem (lib.getName pkg) [
+      "claude"
+      "ngrok"
+      "1password-cli"
+    ];
 }

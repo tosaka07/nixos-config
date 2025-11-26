@@ -33,6 +33,11 @@
       url = "github:laishulu/homebrew-homebrew";
       flake = false;
     };
+
+    claude-code-overlay = {
+      url = "github:ryoppippi/claude-code-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -45,6 +50,7 @@
       homebrew-core,
       homebrew-cask,
       laishulu-homebrew-homebrew,
+      claude-code-overlay,
       ...
     }:
     let
@@ -56,6 +62,7 @@
           homebrew-core
           homebrew-cask
           laishulu-homebrew-homebrew
+          claude-code-overlay
           ;
       };
     in

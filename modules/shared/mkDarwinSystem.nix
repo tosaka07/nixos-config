@@ -5,6 +5,7 @@
   homebrew-core,
   homebrew-cask,
   laishulu-homebrew-homebrew,
+  claude-code-overlay,
 }:
 {
   hostname,
@@ -14,7 +15,7 @@
 nix-darwin.lib.darwinSystem {
   inherit system;
   specialArgs = {
-    inherit hostname username system;
+    inherit hostname username system claude-code-overlay;
   };
   modules = [
     # Common user system configuration
