@@ -49,7 +49,7 @@
     dasel
     codex
     claude-code
-    opencode
+    # opencode
     yazi
 
     # languages

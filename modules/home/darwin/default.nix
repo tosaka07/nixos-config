@@ -15,7 +15,7 @@
     ./programs/ghostty/ghostty.nix
     ./programs/aerospace.nix
     ./programs/karabiner.nix
-    ./programs/zed-editor.nix
+    # ./programs/zed-editor.nix
   ];
 
   programs.home-manager.enable = true;
