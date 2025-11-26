@@ -40,12 +40,14 @@
       "devpod"
       "ollama-app"
       "xcodes-app"
+      "google-chrome"
       "microsoft-edge"
       "hammerspoon"
       "microsoft-teams"
       "microsoft-outlook"
       "localsend"
       "chatgpt-atlas"
+      "postman"
     ];
   };
 }
