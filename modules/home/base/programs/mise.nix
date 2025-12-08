@@ -10,9 +10,6 @@
     enable = true;
     globalConfig = {
       env = {
-        GOOGLE_CLOUD_PROJECT = "inhouse-ai-tapple";
-        GOOGLE_CLOUD_LOCATION = "us-central1";
-        GOOGLE_GENAI_USE_VERTEXAI = true;
         DISABLE_AUTOUPDATER = 1;
       };
       tools = {
