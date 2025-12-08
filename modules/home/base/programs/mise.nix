@@ -23,6 +23,7 @@
         python = "latest";
         uv = "latest";
         rust = "latest";
+        deno = "latest";
         # "npm:opencommit" = "latest";
         # "npm:@openai/codex" = "latest";
         # "npm:@anthropic-ai/claude-code" = "latest";

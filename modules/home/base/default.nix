@@ -14,7 +14,10 @@
     ./programs/gitui.nix
     ./programs/mise.nix
     ./programs/ssh.nix
+    ./programs/sheldon.nix
     ./programs/tmux/tmux.nix
+    ./programs/zsh/default.nix
+    ./programs/zsh/zeno.nix
   ];
 
   # Common CLI packages for all systems
@@ -35,7 +38,7 @@
     go-task
     nixfmt-rfc-style
     google-cloud-sdk
-    trash-cli
+    gomi
     zellij
     glow
     ngrok
