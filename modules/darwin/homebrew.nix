@@ -48,6 +48,8 @@
       "localsend"
       "chatgpt-atlas"
       "postman"
+      "claude"
+      "adobe-creative-cloud"
     ];
   };
 }
