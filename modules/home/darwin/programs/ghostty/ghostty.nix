@@ -22,7 +22,7 @@
     keybind = shift+enter=text:\n
     keybind = global:ctrl+grave_accent=toggle_quick_terminal
     macos-titlebar-style = hidden
-    custom-shader = shaders/cursor_blaze.glsl
+    custom-shader = shaders/cursor_sweep.glsl
   '';
 
   # Ghostty shaders フォルダのコピー
