@@ -8,6 +8,8 @@ vars:
 env:
   NIXPKGS_ALLOW_UNFREE: 1
 
+dotenv: [".env"]
+
 tasks:
   apply:
     desc: "Nix Darwin の設定をビルドして適用します"
