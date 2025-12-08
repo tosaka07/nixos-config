@@ -1,7 +1,21 @@
+
+# ----------------------------------------------
+# Util: functions
+# ----------------------------------------------
+function source_defer() {
+  zsh-defer -c "test -e $1 && source $1 || true"
+}
+
+
 # ----------------------------------------------
 # Library: homebrew
 # ----------------------------------------------
-eval "$(/opt/homebrew/bin/brew shellenv)"
+local brew_path="$HOMEBREW_PREFIX/bin/brew"
+local brew_script_path="${script_dir}/_brew"
+if [ ! -f "$brew_script_path" ]; then
+  eval "source <($brew_path shellenv)"
+fi
+(eval "$brew_path shellenv > $brew_script_path" &) > /dev/null 2>&1
 
 # ----------------------------------------------
 # Determinate Nixd completion
@@ -134,7 +148,7 @@ fi
 # Library: Orbstack
 # ----------------------------------------------
 if command -v orb &> /dev/null; then
-    source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+    source_defer ~/.orbstack/shell/init.zsh
 fi
 
 # ----------------------------------------------

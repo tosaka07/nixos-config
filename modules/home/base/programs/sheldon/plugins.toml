@@ -1,0 +1,37 @@
+shell = "zsh"
+
+# zsh-defer must be defined first before any plugins that use the defer template
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[templates]
+defer = "{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"
+
+[plugins.zsh-async]
+github = "mafredri/zsh-async"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-dirnav]
+github = "Zile995/zsh-dirnav"
+apply = ["defer"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+apply = ["defer"]
+
+[plugins.zeno]
+github = "yuki-yano/zeno.zsh"
+apply = ["defer"]
+
+[plugins.pure]
+github = "sindresorhus/pure"
+use = ["async.zsh", "pure.zsh"]

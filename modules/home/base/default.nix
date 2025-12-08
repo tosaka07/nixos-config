@@ -14,7 +14,7 @@
     ./programs/gitui.nix
     ./programs/mise.nix
     ./programs/ssh.nix
-    ./programs/sheldon.nix
+    ./programs/sheldon
     ./programs/tmux/tmux.nix
     ./programs/zsh/default.nix
     ./programs/zsh/zeno.nix
