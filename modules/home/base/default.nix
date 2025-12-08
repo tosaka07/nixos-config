@@ -49,8 +49,8 @@
     dasel
     codex
     claude-code
-    # opencode
     yazi
+    lazygit
 
     # languages
     nixd
