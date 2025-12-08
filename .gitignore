@@ -4,3 +4,6 @@
 !.env.op
 
 tmux-client-*.log
+
+# macOS
+.DS_Store
