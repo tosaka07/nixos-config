@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  system,
   claude-code-overlay,
   llm-agents,
   ...
@@ -10,7 +11,10 @@
   # overlays を適用
   nixpkgs.overlays = [
     claude-code-overlay.overlays.default
-    llm-agents.overlays.default
+    # llm-agents は packages のみ提供するため、overlay を自作
+    (final: prev: {
+      ccusage = llm-agents.packages.${system}.ccusage;
+    })
     (import ../../overlays)
   ];
 
