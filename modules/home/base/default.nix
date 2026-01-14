@@ -35,6 +35,7 @@
     delta
     gh
     ghq
+    gwq
     go-task
     nixfmt-rfc-style
     google-cloud-sdk

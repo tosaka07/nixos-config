@@ -6,9 +6,10 @@
   ...
 }:
 {
-  # claude-code-overlay を適用
+  # overlays を適用
   nixpkgs.overlays = [
     claude-code-overlay.overlays.default
+    (import ../../overlays)
   ];
 
   # unfree パッケージを個別に許可
