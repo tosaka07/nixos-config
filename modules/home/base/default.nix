@@ -52,6 +52,7 @@
     devcontainer
     dasel
     codex
+    ccusage
     claude-code
     yazi
     lazygit

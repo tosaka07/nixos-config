@@ -3,12 +3,14 @@
   lib,
   pkgs,
   claude-code-overlay,
+  llm-agents,
   ...
 }:
 {
   # overlays を適用
   nixpkgs.overlays = [
     claude-code-overlay.overlays.default
+    llm-agents.overlays.default
     (import ../../overlays)
   ];
 

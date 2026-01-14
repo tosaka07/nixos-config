@@ -38,6 +38,11 @@
       url = "github:ryoppippi/claude-code-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -51,6 +56,7 @@
       homebrew-cask,
       laishulu-homebrew-homebrew,
       claude-code-overlay,
+      llm-agents,
       ...
     }:
     let
@@ -63,6 +69,7 @@
           homebrew-cask
           laishulu-homebrew-homebrew
           claude-code-overlay
+          llm-agents
           ;
       };
     in
