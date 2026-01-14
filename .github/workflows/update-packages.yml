@@ -1,0 +1,44 @@
+name: Update Packages
+
+on:
+  schedule:
+    # 毎日 8:00 JST (23:00 UTC 前日)
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - gwq
+          # 新しいパッケージはここに追加
+    steps:
+      # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      # v21
+      - uses: DeterminateSystems/nix-installer-action@c5a866b6ab867e88becbed4467b93592bce69f8a
+
+      # v13
+      - uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39
+
+      - name: Update ${{ matrix.package }}
+        run: |
+          nix run nixpkgs#nix-update -- \
+            --flake \
+            --version=branch \
+            --commit \
+            ${{ matrix.package }}
+
+      # v8.0.0
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "deps(${{ matrix.package }}): update to latest version"
+          title: "deps(${{ matrix.package }}): update to latest version"
+          branch: deps/update-${{ matrix.package }}
+          delete-branch: true
