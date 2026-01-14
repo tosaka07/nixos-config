@@ -50,6 +50,7 @@
       "postman"
       "claude"
       "adobe-creative-cloud"
+      "spotify"
     ];
   };
 }
