@@ -53,8 +53,6 @@
     ffmpeg
     devcontainer
     dasel
-    codex
-    claude-code
     yazi
     lazygit
 
@@ -65,8 +63,18 @@
     # fonts
     udev-gothic-nf
     plemoljp-nf
-  ] ++ [
+  ] ++ (with llm-agents.packages.${system}; [
     # llm-agents.nix から直接参照
-    llm-agents.packages.${system}.ccusage
-  ];
+    agent-browser
+    amp
+    ccstatusline
+    ccusage
+    ccusage-codex
+    claude-code
+    codex
+    copilot-cli
+    cursor-agent
+    gemini-cli
+    opencode
+  ]);
 }
