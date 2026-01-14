@@ -2,13 +2,11 @@
   config,
   lib,
   pkgs,
-  claude-code-overlay,
   ...
 }:
 {
   # overlays を適用
   nixpkgs.overlays = [
-    claude-code-overlay.overlays.default
     (import ../../overlays)
   ];
 
