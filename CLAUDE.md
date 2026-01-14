@@ -49,6 +49,43 @@ Example module structure:
 }
 ```
 
+### Custom Overlays
+
+カスタムパッケージは `overlays/` ディレクトリで管理する。
+
+```
+overlays/
+├── default.nix     # overlay エントリポイント（属性名を定義）
+└── gwq.nix         # パッケージ定義
+```
+
+#### 命名規則
+
+**重要**: 以下の3箇所で名前を一致させる必要がある：
+
+1. **`overlays/default.nix` の属性名** - nix-update が参照する名前
+   ```nix
+   final: prev: {
+     gwq = prev.callPackage ./gwq.nix { };  # ← "gwq" が属性名
+   }
+   ```
+
+2. **`.github/workflows/update-packages.yml` の matrix.package**
+   ```yaml
+   matrix:
+     package:
+       - gwq  # ← 属性名と一致
+   ```
+
+3. **パッケージファイル名** (`overlays/gwq.nix`) - 属性名と一致させる（推奨）
+
+#### 新しいパッケージの追加手順
+
+1. `overlays/<package-name>.nix` を作成
+2. `overlays/default.nix` に属性を追加
+3. `modules/home/base/default.nix` の `home.packages` に追加
+4. `.github/workflows/update-packages.yml` の `matrix.package` に追加
+
 ### Directory Structure
 
 ```
