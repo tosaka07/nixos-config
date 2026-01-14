@@ -19,5 +19,5 @@ jobs:
       # v13
       - uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39
 
-      - name: Build
-        run: nix build .#darwinConfigurations.CA-20033730.system
+      - name: Check
+        run: nix eval .#darwinConfigurations.CA-20033730.system --apply 'x: "ok"'

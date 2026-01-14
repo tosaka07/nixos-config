@@ -8,7 +8,7 @@
 {
   programs.aerospace = {
     enable = true;
-    userSettings = {
+    settings = {
       after-startup-command = [
         # "exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=4.0"
       ];

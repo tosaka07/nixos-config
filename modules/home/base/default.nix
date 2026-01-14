@@ -37,7 +37,7 @@
     ghq
     gwq
     go-task
-    nixfmt-rfc-style
+    nixfmt
     google-cloud-sdk
     gomi
     zellij
