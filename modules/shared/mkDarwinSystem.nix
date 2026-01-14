@@ -51,7 +51,7 @@ nix-darwin.lib.darwinSystem {
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
-        inherit hostname username system;
+        inherit hostname username system llm-agents;
       };
 
       home-manager.users.${username} = import ../users/${username} {

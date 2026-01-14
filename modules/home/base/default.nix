@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+  system,
+  llm-agents,
   ...
 }:
 {
@@ -52,7 +54,6 @@
     devcontainer
     dasel
     codex
-    ccusage
     claude-code
     yazi
     lazygit
@@ -64,5 +65,8 @@
     # fonts
     udev-gothic-nf
     plemoljp-nf
+  ] ++ [
+    # llm-agents.nix から直接参照
+    llm-agents.packages.${system}.ccusage
   ];
 }
