@@ -79,12 +79,20 @@ overlays/
 
 3. **パッケージファイル名** (`overlays/gwq.nix`) - 属性名と一致させる（推奨）
 
+4. **`flake.nix` の packages output** - nix-update が参照
+   ```nix
+   packages = forAllSystems (pkgs: {
+     gwq = pkgs.callPackage ./overlays/gwq.nix { };  # ← 属性名と一致
+   });
+   ```
+
 #### 新しいパッケージの追加手順
 
 1. `overlays/<package-name>.nix` を作成
 2. `overlays/default.nix` に属性を追加
-3. `modules/home/base/default.nix` の `home.packages` に追加
-4. `.github/workflows/update-packages.yml` の `matrix.package` に追加
+3. `flake.nix` の `packages` output に追加（nix-update 用）
+4. `modules/home/base/default.nix` の `home.packages` に追加
+5. `.github/workflows/update-packages.yml` の `matrix.package` に追加
 
 ### Directory Structure
 
