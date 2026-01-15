@@ -26,11 +26,8 @@ jobs:
 
       - name: Update ${{ matrix.package }}
         run: |
-          nix run nixpkgs#nix-update -- \
-            --flake \
-            --version=branch \
-            --commit \
-            ${{ matrix.package }}
+          nix-shell -p python3 nix-prefetch-github --run \
+            "python overlays/${{ matrix.package }}/update.py"
 
       # v8.0.0
       - name: Create Pull Request

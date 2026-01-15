@@ -70,20 +70,8 @@
           llm-agents
           ;
       };
-      # nix-update で使用するため、packages output を定義
-      forAllSystems =
-        f:
-        nixpkgs.lib.genAttrs [
-          "aarch64-darwin"
-          "x86_64-linux"
-        ] (system: f nixpkgs.legacyPackages.${system});
     in
     {
-      # nix-update 用の packages output
-      packages = forAllSystems (pkgs: {
-        gwq = pkgs.callPackage ./overlays/gwq.nix { };
-      });
-
       darwinConfigurations = {
         "CA-20033730" = mkDarwinSystem {
           hostname = "CA-20033730";

@@ -3,18 +3,21 @@
   buildGoModule,
   fetchFromGitHub,
 }:
+let
+  hashes = lib.importJSON ./hashes.json;
+in
 buildGoModule rec {
   pname = "gwq";
-  version = "0.0.7";
+  inherit (hashes) version;
 
   src = fetchFromGitHub {
     owner = "d-kuro";
     repo = "gwq";
     rev = "v${version}";
-    hash = "sha256-CvfAxTd7/AK98TSJDM+iNJTUALMKMk8esXEn7Fuumik=";
+    hash = hashes.hash;
   };
 
-  vendorHash = "sha256-c1vq9yETUYfY2BoXSEmRZj/Ceetu0NkIoVCM3wYy5iY=";
+  vendorHash = hashes.vendorHash;
 
   subPackages = [ "cmd/gwq" ];
 

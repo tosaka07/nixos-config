@@ -51,48 +51,55 @@ Example module structure:
 
 ### Custom Overlays
 
-カスタムパッケージは `overlays/` ディレクトリで管理する。
+カスタムパッケージは `overlays/` ディレクトリで管理する。llm-agents.nix 風の構造を採用。
 
 ```
 overlays/
-├── default.nix     # overlay エントリポイント（属性名を定義）
-└── gwq.nix         # パッケージ定義
+├── default.nix           # overlay エントリポイント
+└── gwq/                   # パッケージディレクトリ
+    ├── hashes.json        # version, hash, vendorHash
+    ├── default.nix        # パッケージ定義
+    └── update.py          # 更新スクリプト
 ```
 
-#### 命名規則
+#### パッケージ構造
 
-**重要**: 以下の3箇所で名前を一致させる必要がある：
+各パッケージは `overlays/<package-name>/` ディレクトリに配置：
 
-1. **`overlays/default.nix` の属性名** - nix-update が参照する名前
-   ```nix
-   final: prev: {
-     gwq = prev.callPackage ./gwq.nix { };  # ← "gwq" が属性名
+1. **`hashes.json`** - バージョンとハッシュを分離管理
+   ```json
+   {
+     "version": "0.0.7",
+     "hash": "sha256-...",
+     "vendorHash": "sha256-..."
    }
    ```
 
-2. **`.github/workflows/update-packages.yml` の matrix.package**
-   ```yaml
-   matrix:
-     package:
-       - gwq  # ← 属性名と一致
+2. **`default.nix`** - hashes.json を読み込むパッケージ定義
+   ```nix
+   let
+     hashes = lib.importJSON ./hashes.json;
+   in
+   buildGoModule rec {
+     inherit (hashes) version;
+     # ...
+   }
    ```
 
-3. **パッケージファイル名** (`overlays/gwq.nix`) - 属性名と一致させる（推奨）
-
-4. **`flake.nix` の packages output** - nix-update が参照
-   ```nix
-   packages = forAllSystems (pkgs: {
-     gwq = pkgs.callPackage ./overlays/gwq.nix { };  # ← 属性名と一致
-   });
+3. **`update.py`** - GitHub API から最新バージョンを取得して更新
+   ```bash
+   nix-shell -p python3 nix-prefetch-github --run "python overlays/gwq/update.py"
    ```
 
 #### 新しいパッケージの追加手順
 
-1. `overlays/<package-name>.nix` を作成
-2. `overlays/default.nix` に属性を追加
-3. `flake.nix` の `packages` output に追加（nix-update 用）
-4. `modules/home/base/default.nix` の `home.packages` に追加
-5. `.github/workflows/update-packages.yml` の `matrix.package` に追加
+1. `overlays/<package-name>/` ディレクトリを作成
+2. `overlays/<package-name>/hashes.json` を作成
+3. `overlays/<package-name>/default.nix` を作成
+4. `overlays/<package-name>/update.py` を作成
+5. `overlays/default.nix` に属性を追加
+6. `modules/home/base/default.nix` の `home.packages` に追加
+7. `.github/workflows/update-packages.yml` の `matrix.package` に追加
 
 ### Directory Structure
 
