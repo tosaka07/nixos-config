@@ -23,58 +23,61 @@
   ];
 
   # Common CLI packages for all systems
-  home.packages = with pkgs; [
-    jq
-    yq
-    fzf
-    fd
-    ripgrep
-    eza
-    atuin
-    starship
-    zoxide
-    neovim
-    delta
-    gh
-    ghq
-    gwq
-    go-task
-    nixfmt
-    google-cloud-sdk
-    gomi
-    zellij
-    glow
-    ngrok
-    yt-dlp
-    difftastic
-    hyperfine
-    ghostscript
-    _1password-cli
-    ffmpeg
-    devcontainer
-    dasel
-    yazi
-    lazygit
+  home.packages =
+    with pkgs;
+    [
+      jq
+      yq
+      fzf
+      fd
+      ripgrep
+      eza
+      atuin
+      starship
+      zoxide
+      neovim
+      delta
+      gh
+      ghq
+      gwq
+      go-task
+      nixfmt
+      google-cloud-sdk
+      gomi
+      zellij
+      glow
+      ngrok
+      yt-dlp
+      difftastic
+      hyperfine
+      ghostscript
+      _1password-cli
+      ffmpeg
+      devcontainer
+      dasel
+      yazi
+      lazygit
 
-    # languages
-    nixd
-    nil
+      # languages
+      nixd
+      nil
 
-    # fonts
-    udev-gothic-nf
-    plemoljp-nf
-  ] ++ (with llm-agents.packages.${system}; [
-    # llm-agents.nix から直接参照
-    agent-browser
-    amp
-    ccstatusline
-    ccusage
-    ccusage-codex
-    claude-code
-    codex
-    copilot-cli
-    cursor-agent
-    gemini-cli
-    opencode
-  ]);
+      # fonts
+      udev-gothic-nf
+      plemoljp-nf
+    ]
+    ++ (with llm-agents.packages.${system}; [
+      # llm-agents.nix から直接参照
+      agent-browser
+      amp
+      ccstatusline
+      ccusage
+      ccusage-codex
+      claude-code
+      codex
+      copilot-cli
+      cursor-agent
+      # gemini-cli
+      opencode
+    ]);
 }
