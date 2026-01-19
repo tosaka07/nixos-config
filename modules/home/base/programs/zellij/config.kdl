@@ -1,2 +1,39 @@
 theme "catppuccin-mocha"
 default_mode "locked"
+
+keybinds clear-defaults=true {
+  locked {
+    bind "Ctrl Space" { SwitchToMode "Tmux"; }
+  }
+  tmux {
+    bind "c" { NewTab; SwitchToMode "Locked"; }
+    bind "-" { NewPane "Down"; SwitchToMode "Locked"; }
+    bind "|" { NewPane "Right"; SwitchToMode "Locked"; }
+    bind "h" { MoveFocus "Left"; SwitchToMode "Locked"; }
+    bind "j" { MoveFocus "Down"; SwitchToMode "Locked"; }
+    bind "k" { MoveFocus "Up"; SwitchToMode "Locked"; }
+    bind "l" { MoveFocus "Right"; SwitchToMode "Locked"; }
+    bind "x" { CloseFocus; SwitchToMode "Locked"; }
+
+    bind "Shift h" { GoToPreviousTab; SwitchToMode "Locked"; }
+    bind "Shift l" { GoToNextTab; SwitchToMode "Locked"; }
+    bind "1" { GoToTab 1; SwitchToMode "Locked"; }
+    bind "2" { GoToTab 2; SwitchToMode "Locked"; }
+    bind "3" { GoToTab 3; SwitchToMode "Locked"; }
+    bind "4" { GoToTab 4; SwitchToMode "Locked"; }
+    bind "5" { GoToTab 5; SwitchToMode "Locked"; }
+    bind "6" { GoToTab 6; SwitchToMode "Locked"; }
+    bind "7" { GoToTab 7; SwitchToMode "Locked"; }
+    bind "8" { GoToTab 8; SwitchToMode "Locked"; }
+    bind "9" { GoToTab 9; SwitchToMode "Locked"; }
+
+    // prefixを2回押した時の素通し（デフォで Ctrl+b は Write 2 して normal に戻す例がある）:contentReference[oaicite:5]{index=5}
+    // ここも locked に戻したければ:
+    bind "Ctrl Space" { Write 0; SwitchToMode "Locked"; } // 必要なら
+  }
+
+  shared_except "locked" {
+    bind "Ctrl Space" { SwitchToMode "Locked"; }
+  }
+}
+
