@@ -42,7 +42,8 @@
           set -g status-left-length 100
           set -g status-left ""
 
-          # Default Catppuccin modules
+          # Reset status-right before setting catppuccin modules
+          set -g status-right ""
           set -ag status-right "#{E:@catppuccin_status_application}"
           set -ag status-right "#{E:@catppuccin_status_user}"
           set -ag status-right "#{E:@catppuccin_status_host}"
@@ -98,8 +99,8 @@
       # 'c-r' 設定リロード
       bind R source '~/.config/tmux/tmux.conf'
 
-      # 'c-g' gituiを起動
-      bind C-g popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}" "gitui"
+      # 'c-g' lazygitを起動
+      bind C-g popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}" "lazygit"
 
       bind C-i popup -xC -yC -w90% -h90% -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}"
 
