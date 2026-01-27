@@ -105,13 +105,16 @@
       bind C-i popup -xC -yC -w90% -h90% -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}"
 
       # 'C-w' git worktreeを選択/作成
-      bind C-w run-shell 'cd "#{pane_current_path}" && ~/.config/tmux/scripts/worktree.sh'
+      bind C-w popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" "~/.config/tmux/scripts/worktree.sh"
 
       TMUX_FZF_LAUNCH_KEY="C-f"
 
       # ステータスバー
       set -g status-position top
       set-option -g status-interval 1
+
+      # ウィンドウを閉じた時に番号を詰める
+      set-option -g renumber-windows on
 
       set-option -s escape-time 0
       set-option -g display-time 4000
