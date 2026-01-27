@@ -7,6 +7,7 @@
   laishulu-homebrew-homebrew,
   nikitabobko-homebrew-tap,
   llm-agents,
+  gwm,
 }:
 {
   hostname,
@@ -16,7 +17,7 @@
 nix-darwin.lib.darwinSystem {
   inherit system;
   specialArgs = {
-    inherit hostname username system llm-agents;
+    inherit hostname username system llm-agents gwm;
   };
   modules = [
     # Common user system configuration
@@ -52,7 +53,7 @@ nix-darwin.lib.darwinSystem {
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
-        inherit hostname username system llm-agents;
+        inherit hostname username system llm-agents gwm;
       };
 
       home-manager.users.${username} = import ../users/${username} {

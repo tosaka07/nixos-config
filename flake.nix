@@ -48,6 +48,11 @@
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    gwm = {
+      url = "github:tosaka07/gwm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -62,6 +67,7 @@
       laishulu-homebrew-homebrew,
       nikitabobko-homebrew-tap,
       llm-agents,
+      gwm,
       ...
     }:
     let
@@ -75,6 +81,7 @@
           laishulu-homebrew-homebrew
           nikitabobko-homebrew-tap
           llm-agents
+          gwm
           ;
       };
       # Overlay で定義したパッケージを packages 属性としてエクスポート
@@ -90,7 +97,10 @@
             f (
               import nixpkgs {
                 inherit system;
-                overlays = [ (import ./overlays) ];
+                overlays = [
+                  (import ./overlays)
+                  gwm.overlays.default
+                ];
               }
             )
           );
