@@ -39,6 +39,11 @@
       flake = false;
     };
 
+    nikitabobko-homebrew-tap = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
+
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,6 +60,7 @@
       homebrew-core,
       homebrew-cask,
       laishulu-homebrew-homebrew,
+      nikitabobko-homebrew-tap,
       llm-agents,
       ...
     }:
@@ -67,6 +73,7 @@
           homebrew-core
           homebrew-cask
           laishulu-homebrew-homebrew
+          nikitabobko-homebrew-tap
           llm-agents
           ;
       };

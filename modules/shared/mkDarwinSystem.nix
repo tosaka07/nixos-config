@@ -5,6 +5,7 @@
   homebrew-core,
   homebrew-cask,
   laishulu-homebrew-homebrew,
+  nikitabobko-homebrew-tap,
   llm-agents,
 }:
 {
@@ -38,6 +39,7 @@ nix-darwin.lib.darwinSystem {
           "homebrew/homebrew-core" = homebrew-core;
           "homebrew/homebrew-cask" = homebrew-cask;
           "laishulu/homebrew-homebrew" = laishulu-homebrew-homebrew;
+          "nikitabobko/homebrew-tap" = nikitabobko-homebrew-tap;
         };
         mutableTaps = false;
       };
