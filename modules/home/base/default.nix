@@ -40,6 +40,7 @@
       gh
       ghq
       gwq
+      gwm
       go-task
       nixfmt
       google-cloud-sdk
