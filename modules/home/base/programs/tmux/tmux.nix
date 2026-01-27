@@ -6,12 +6,6 @@
 }:
 
 {
-  # Install tmux scripts using xdg.configFile
-  xdg.configFile."tmux/scripts/worktree.sh" = {
-    source = ./worktree.sh;
-    executable = true;
-  };
-
   programs.tmux = {
     enable = true;
     prefix = "C-Space";
@@ -104,8 +98,8 @@
 
       bind C-i popup -xC -yC -w90% -h90% -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}"
 
-      # 'C-w' git worktreeを選択/作成
-      bind C-w popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" "~/.config/tmux/scripts/worktree.sh"
+      # 'C-w' gwm (Git Worktree Manager) を起動
+      bind C-w popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" "gwm"
 
       TMUX_FZF_LAUNCH_KEY="C-f"
 
