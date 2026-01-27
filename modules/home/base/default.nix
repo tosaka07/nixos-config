@@ -14,6 +14,7 @@
     ./programs/bat.nix
     ./programs/git.nix
     ./programs/gitui.nix
+    ./programs/gwm.nix
     ./programs/mise.nix
     ./programs/ssh.nix
     ./programs/sheldon
