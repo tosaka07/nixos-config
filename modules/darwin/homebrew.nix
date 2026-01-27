@@ -12,10 +12,14 @@
     onActivation = {
       cleanup = "uninstall";
     };
+    taps = [
+      "nikitabobko/tap"
+    ];
     brews = [
       "macism"
     ];
     casks = [
+      "nikitabobko/tap/aerospace"
       "1password"
       "craft"
       "orbstack"

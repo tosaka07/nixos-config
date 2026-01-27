@@ -13,7 +13,7 @@
   imports = [
     ../base
     ./programs/ghostty/ghostty.nix
-    ./programs/aerospace.nix
+    ./programs/aerospace
     ./programs/karabiner.nix
     # ./programs/zed-editor.nix
   ];
