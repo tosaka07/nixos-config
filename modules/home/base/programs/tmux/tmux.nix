@@ -96,10 +96,11 @@
       # 'c-g' lazygitを起動
       bind C-g popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}" "lazygit"
 
-      bind C-i popup -xC -yC -w90% -h90% -d "#{pane_current_path}" -e "TMUX_POPUP=1" -e "TMUX_PARENT_PANE=#{pane_id}"
+      bind C-i popup -xC -yC -w90% -h90% -d "#{pane_current_path}" -e "tmux_popup=1" -e "tmux_parent_pane=#{pane_id}"
 
-      # 'C-w' gwm (Git Worktree Manager) を起動
-      bind C-w popup -xC -yC -w90% -h90% -E -d "#{pane_current_path}" "gwm"
+      # 'C-w' gwm (Git Worktree Manager) を起動し、選択したディレクトリで開発環境を構築
+      # レイアウト: 左ペイン(claude) | 右上ペイン(vim) | 右下ペイン(terminal)
+      bind C-w popup -xC -yC -w60% -h50% -E -d "#{pane_current_path}" "zsh -ic gwmt"
 
       TMUX_FZF_LAUNCH_KEY="C-f"
 

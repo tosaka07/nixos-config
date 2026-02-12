@@ -16,6 +16,7 @@
       "macism"
     ];
     casks = [
+      "yashiki"
       "aerospace"
       "1password"
       "craft"
@@ -52,6 +53,7 @@
       "claude"
       "adobe-creative-cloud"
       "spotify"
+      "drawio"
     ];
   };
 }

@@ -6,6 +6,7 @@
   homebrew-cask,
   laishulu-homebrew-homebrew,
   nikitabobko-homebrew-tap,
+  typester-homebrew-yashiki,
   llm-agents,
   gwm,
 }:
@@ -41,6 +42,7 @@ nix-darwin.lib.darwinSystem {
           "homebrew/homebrew-cask" = homebrew-cask;
           "laishulu/homebrew-homebrew" = laishulu-homebrew-homebrew;
           "nikitabobko/homebrew-tap" = nikitabobko-homebrew-tap;
+          "typester/homebrew-yashiki" = typester-homebrew-yashiki;
         };
         mutableTaps = false;
       };

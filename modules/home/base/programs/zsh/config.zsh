@@ -231,6 +231,31 @@ function wt() {
     fi
 }
 
+# gwm で worktree を選択し、開発環境を構築する
+# レイアウト: 左ペイン(claude) | 右上ペイン(vim) | 右下ペイン(terminal)
+function gwmt() {
+    local dir win_name
+
+    # gwm で worktree を選択
+    dir=$(gwm -p)
+
+    if [[ -z "$dir" || ! -d "$dir" ]]; then
+        return 0
+    fi
+
+    win_name=$(basename "$dir")
+
+    # 開発環境を構築
+    tmux new-window -c "$dir" -n "$win_name"
+    tmux split-window -h -c "$dir" -l 40%
+    tmux split-window -v -c "$dir" -l 40%
+    tmux select-pane -t 0
+    tmux send-keys "claude" Enter
+    tmux select-pane -t 1
+    tmux send-keys "vim ." Enter
+    tmux select-pane -t 2
+}
+
 # Create tmux pane on right with 30% width and launch claude
 function cc() {
     if [[ -n "$TMUX" ]]; then

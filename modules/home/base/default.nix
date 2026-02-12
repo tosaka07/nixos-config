@@ -37,6 +37,7 @@
       starship
       zoxide
       neovim
+      helix
       delta
       gh
       ghq

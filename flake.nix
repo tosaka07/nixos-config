@@ -44,6 +44,11 @@
       flake = false;
     };
 
+    typester-homebrew-yashiki = {
+      url = "github:typester/homebrew-yashiki";
+      flake = false;
+    };
+
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -66,6 +71,7 @@
       homebrew-cask,
       laishulu-homebrew-homebrew,
       nikitabobko-homebrew-tap,
+      typester-homebrew-yashiki,
       llm-agents,
       gwm,
       ...
@@ -80,6 +86,7 @@
           homebrew-cask
           laishulu-homebrew-homebrew
           nikitabobko-homebrew-tap
+          typester-homebrew-yashiki
           llm-agents
           gwm
           ;
