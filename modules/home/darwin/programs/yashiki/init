@@ -1,0 +1,126 @@
+#!/bin/sh
+
+# Yashiki Window Manager Configuration
+# Keybindings designed to match AeroSpace shortcuts
+
+# --- Layout ---
+yashiki layout-set-default tatami
+yashiki set-outer-gap 16
+yashiki layout-cmd --layout tatami set-inner-gap 8
+
+# --- Cursor & Focus ---
+yashiki set-cursor-warp on-focus-change
+yashiki set-auto-raise enabled --delay 100
+
+# =============================================================================
+# Hyper (ctrl-alt-shift-cmd) — Navigation & View
+# AeroSpace main mode equivalent
+# =============================================================================
+
+# Tag view (workspace switch)
+yashiki bind ctrl-alt-shift-cmd-1 tag-view 1        # Tag 1
+yashiki bind ctrl-alt-shift-cmd-2 tag-view 2        # Tag 2
+yashiki bind ctrl-alt-shift-cmd-3 tag-view 4        # Tag 3
+yashiki bind ctrl-alt-shift-cmd-4 tag-view 8        # Tag 4
+yashiki bind ctrl-alt-shift-cmd-5 tag-view 16       # Tag 5
+yashiki bind ctrl-alt-shift-cmd-6 tag-view 32       # Tag 6
+yashiki bind ctrl-alt-shift-cmd-7 tag-view 64       # Tag 7
+yashiki bind ctrl-alt-shift-cmd-8 tag-view 128      # Tag 8
+yashiki bind ctrl-alt-shift-cmd-9 tag-view 256      # Tag 9
+yashiki bind ctrl-alt-shift-cmd-0 tag-view 512      # Tag 10
+
+# Window focus (h/j/k/l directional)
+yashiki bind ctrl-alt-shift-cmd-h window-focus left
+yashiki bind ctrl-alt-shift-cmd-j window-focus down
+yashiki bind ctrl-alt-shift-cmd-k window-focus up
+yashiki bind ctrl-alt-shift-cmd-l window-focus right
+
+# Workspace back-and-forth
+yashiki bind ctrl-alt-shift-cmd-space tag-view-last
+
+# Fullscreen toggle
+yashiki bind ctrl-alt-shift-cmd-z window-toggle-fullscreen
+
+# Float toggle
+yashiki bind ctrl-alt-shift-cmd-f window-toggle-float
+
+# Close window
+yashiki bind ctrl-alt-shift-cmd-x window-close
+
+# Monitor focus
+yashiki bind ctrl-alt-shift-cmd-n output-focus next
+yashiki bind ctrl-alt-shift-cmd-p output-focus prev
+
+# =============================================================================
+# ctrl-alt-cmd — Window Manipulation
+# AeroSpace window mode equivalent
+# =============================================================================
+
+# Window swap (move window position)
+yashiki bind ctrl-alt-cmd-h window-swap left
+yashiki bind ctrl-alt-cmd-j window-swap down
+yashiki bind ctrl-alt-cmd-k window-swap up
+yashiki bind ctrl-alt-cmd-l window-swap right
+
+# Move window to tag
+yashiki bind ctrl-alt-cmd-1 window-move-to-tag 1
+yashiki bind ctrl-alt-cmd-2 window-move-to-tag 2
+yashiki bind ctrl-alt-cmd-3 window-move-to-tag 4
+yashiki bind ctrl-alt-cmd-4 window-move-to-tag 8
+yashiki bind ctrl-alt-cmd-5 window-move-to-tag 16
+yashiki bind ctrl-alt-cmd-6 window-move-to-tag 32
+yashiki bind ctrl-alt-cmd-7 window-move-to-tag 64
+yashiki bind ctrl-alt-cmd-8 window-move-to-tag 128
+yashiki bind ctrl-alt-cmd-9 window-move-to-tag 256
+yashiki bind ctrl-alt-cmd-0 window-move-to-tag 512
+
+# Move window to next monitor
+yashiki bind ctrl-alt-cmd-m output-send next
+
+# Layout switching
+yashiki bind ctrl-alt-cmd-t layout-set tatami
+yashiki bind ctrl-alt-cmd-a layout-set byobu
+
+# Tatami: zoom window to main area
+yashiki bind ctrl-alt-cmd-z layout-cmd zoom
+
+# Tatami: adjust main area window count
+yashiki bind ctrl-alt-cmd-equal layout-cmd inc-main-count
+yashiki bind ctrl-alt-cmd-minus layout-cmd dec-main-count
+
+# Retile
+yashiki bind ctrl-alt-cmd-r retile
+
+# =============================================================================
+# Window Rules
+# =============================================================================
+
+# Common UI patterns
+yashiki rule-add --subrole Dialog float
+yashiki rule-add --subrole FloatingWindow float
+
+# Communication apps -> Tag 1
+yashiki rule-add --app-id com.tinyspeck.slackmacgap tags 1
+yashiki rule-add --app-id com.mimestream.Mimestream tags 1
+yashiki rule-add --app-id com.microsoft.teams2 tags 1
+yashiki rule-add --app-id com.hnc.Discord tags 1
+
+# Browsers -> Tag 2
+yashiki rule-add --app-id com.apple.Safari tags 2
+yashiki rule-add --app-id company.thebrowser.Browser tags 2
+
+# Float-only apps
+yashiki rule-add --app-id com.apple.finder float
+yashiki rule-add --app-id com.1password.1password float
+yashiki rule-add --app-id com.apple.ActivityMonitor float
+yashiki rule-add --app-id us.zoom.xos float
+yashiki rule-add --app-id com.bitwarden.desktop float
+yashiki rule-add --app-id com.openai.chat float
+
+# Workarounds
+yashiki rule-add --app-id com.mitchellh.ghostty --ax-id "com.mitchellh.ghostty.quickTerminal" ignore
+yashiki rule-add --app-id com.colliderli.iina float
+yashiki rule-add --app-id org.mozilla.firefox --subrole AXUnknown ignore
+yashiki rule-add --app-id org.mozilla.firefox --window-level floating float
+yashiki rule-add --app-id com.microsoft.Outlook --ax-id none --subrole none ignore
+yashiki rule-add --app-name borders ignore

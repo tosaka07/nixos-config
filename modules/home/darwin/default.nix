@@ -14,6 +14,7 @@
     ../base
     ./programs/ghostty/ghostty.nix
     ./programs/aerospace
+    ./programs/yashiki
     ./programs/karabiner.nix
     # ./programs/zed-editor.nix
   ];
