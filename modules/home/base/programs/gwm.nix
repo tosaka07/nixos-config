@@ -7,9 +7,9 @@
 {
   xdg.configFile."gwm/config.toml".text = ''
     [worktree]
-    basedir = ".git/wt"
+    basedir = "~/workspace/worktrees"
 
     [naming]
-    template = "wt-{branch}"
+    template = "{host}/{owner}/{repository}/{branch}"
   '';
 }
