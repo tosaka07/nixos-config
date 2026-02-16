@@ -2,8 +2,14 @@
   description = "Nix configurations for TOSAKA";
 
   nixConfig = {
-    extra-substituters = [ "https://cache.numtide.com" ];
-    extra-trusted-public-keys = [ "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" ];
+    extra-substituters = [
+      "https://cache.numtide.com"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
   };
 
   inputs = {
@@ -61,6 +67,8 @@
 
     skills-catalog = {
       url = "path:./skills";
+      inputs.agent-skills.inputs.nixpkgs.follows = "nixpkgs";
+      inputs.agent-skills.inputs.home-manager.follows = "home-manager";
     };
   };
 

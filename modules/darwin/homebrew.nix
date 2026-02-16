@@ -11,6 +11,8 @@
     user = username;
     onActivation = {
       cleanup = "uninstall";
+      autoUpdate = false;
+      upgrade = false;
     };
     brews = [
       "macism"

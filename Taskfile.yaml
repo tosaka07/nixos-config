@@ -16,8 +16,29 @@ tasks:
     platforms: [darwin]
     cmds:
       - |
-        nix build .#darwinConfigurations.{{.HOST}}.system --extra-experimental-features 'nix-command flakes' 
+        nix build .#darwinConfigurations.{{.HOST}}.system --extra-experimental-features 'nix-command flakes'
         sudo ./result/sw/bin/darwin-rebuild switch --flake ".#{{.HOST}}"
+
+  eval:
+    desc: "Nix evaluation の時間を計測します"
+    platforms: [darwin]
+    cmds:
+      - |
+        time nix eval .#darwinConfigurations.{{.HOST}}.system --apply 'x: "ok"' --extra-experimental-features 'nix-command flakes'
+
+  dry-run:
+    desc: "ビルド対象のパッケージを確認します（実際にはビルドしない）"
+    platforms: [darwin]
+    cmds:
+      - nix build .#darwinConfigurations.{{.HOST}}.system --extra-experimental-features 'nix-command flakes' --dry-run
+
+  diff:
+    desc: "現在のシステムプロファイルとの差分を表示します"
+    platforms: [darwin]
+    cmds:
+      - |
+        nix build .#darwinConfigurations.{{.HOST}}.system --extra-experimental-features 'nix-command flakes'
+        nix store diff-closures /nix/var/nix/profiles/system ./result
 
   gc:
     desc: "Nix ストアのガベージコレクションを実行します"
