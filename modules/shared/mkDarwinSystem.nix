@@ -9,6 +9,7 @@
   typester-homebrew-yashiki,
   llm-agents,
   gwm,
+  skills-catalog,
 }:
 {
   hostname,
@@ -58,8 +59,11 @@ nix-darwin.lib.darwinSystem {
         inherit hostname username system llm-agents gwm;
       };
 
-      home-manager.users.${username} = import ../users/${username} {
-        inherit hostname username system;
+      home-manager.users.${username} = {
+        imports = [
+          (import ../users/${username} { inherit hostname username system; })
+          skills-catalog.homeManagerModules.default
+        ];
       };
     }
   ];

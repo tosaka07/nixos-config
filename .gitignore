@@ -7,3 +7,6 @@ tmux-client-*.log
 
 # macOS
 .DS_Store
+
+# skills
+skills/src/**/node_modules/

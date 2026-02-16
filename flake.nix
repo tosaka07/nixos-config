@@ -58,6 +58,10 @@
       url = "github:tosaka07/gwm";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    skills-catalog = {
+      url = "path:./skills";
+    };
   };
 
   outputs =
@@ -74,6 +78,7 @@
       typester-homebrew-yashiki,
       llm-agents,
       gwm,
+      skills-catalog,
       ...
     }:
     let
@@ -89,6 +94,7 @@
           typester-homebrew-yashiki
           llm-agents
           gwm
+          skills-catalog
           ;
       };
       # Overlay で定義したパッケージを packages 属性としてエクスポート
