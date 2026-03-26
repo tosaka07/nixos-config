@@ -43,6 +43,9 @@
         amend = "commit --amend";
         ammend = "commit --amend";
 
+        # switch
+        sw = "switch";
+
         # checkout
         co = "checkout";
         nb = "checkout -b";
