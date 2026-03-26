@@ -60,6 +60,7 @@
       dasel
       yazi
       lazygit
+      octorus
 
       # languages
       nixd
