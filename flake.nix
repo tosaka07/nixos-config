@@ -55,6 +55,11 @@
       flake = false;
     };
 
+    k1low-homebrew-tap = {
+      url = "github:k1LoW/homebrew-tap";
+      flake = false;
+    };
+
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -84,6 +89,7 @@
       laishulu-homebrew-homebrew,
       nikitabobko-homebrew-tap,
       typester-homebrew-yashiki,
+      k1low-homebrew-tap,
       llm-agents,
       gwm,
       skills-catalog,
@@ -100,6 +106,7 @@
           laishulu-homebrew-homebrew
           nikitabobko-homebrew-tap
           typester-homebrew-yashiki
+          k1low-homebrew-tap
           llm-agents
           gwm
           skills-catalog

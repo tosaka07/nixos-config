@@ -7,6 +7,7 @@
   laishulu-homebrew-homebrew,
   nikitabobko-homebrew-tap,
   typester-homebrew-yashiki,
+  k1low-homebrew-tap,
   llm-agents,
   gwm,
   skills-catalog,
@@ -44,6 +45,7 @@ nix-darwin.lib.darwinSystem {
           "laishulu/homebrew-homebrew" = laishulu-homebrew-homebrew;
           "nikitabobko/homebrew-tap" = nikitabobko-homebrew-tap;
           "typester/homebrew-yashiki" = typester-homebrew-yashiki;
+          "k1low/homebrew-tap" = k1low-homebrew-tap;
         };
         mutableTaps = false;
       };
