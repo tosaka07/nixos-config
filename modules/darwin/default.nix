@@ -17,6 +17,6 @@
   system.configurationRevision = null;
 
   # Enable fish shell system-wide (Darwin-specific)
-  programs.zsh.enable = true;
-  environment.shells = [ pkgs.zsh ];
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
 }
