@@ -15,6 +15,7 @@ in
 {
   xdg.configFile."fish/themes/Catppuccin Mocha.theme".source =
     "${catppuccin-fish}/themes/Catppuccin Mocha.theme";
+  xdg.configFile."fish/completions/pnpm.fish".source = ./completions/pnpm.fish;
 
   # Darwin-specific home configuration
   home.activation.configure-tide = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -28,10 +29,6 @@ in
   programs.fish = {
     enable = true;
     plugins = with pkgs.fishPlugins; [
-      {
-        name = "fzf";
-        src = fzf-fish.src;
-      }
       {
         name = "tide";
         src = tide.src;

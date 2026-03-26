@@ -29,8 +29,7 @@ fish_add_path $HOME/.istioctl/bin
 # ----------------------------------------------
 # Variables
 # ----------------------------------------------
-set -g FZF_TMUX 1
-set -g FZF_TMUX_OPTS -p
+set -gx ENABLE_TOOL_SEARCH true
 
 if type -q mise
     mise activate fish | source
@@ -51,26 +50,32 @@ set -Ux FZF_DEFAULT_OPTS "\
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
+if type -q fzf
+    fzf --fish | source
+    bind \t fzf-completion
+    bind -M insert \t fzf-completion
+end
+
 # ----------------------------------------------
 # Library: neovim
 # ----------------------------------------------
 if type -q nvim
     set -gx EDITOR nvim
     set -gx VISUAL nvim
-    alias vi="nvim"
-    alias vim="nvim"
+    abbr --add vi nvim
+    abbr --add vim nvim
 end
 
 # ----------------------------------------------
 # Library: eza
 # ----------------------------------------------
 if type -q eza
-    alias ls="eza"
-    alias ll="eza -lF --time-style=long-iso"
-    alias la="eza -laF --time-style=long-iso"
-    alias lt="eza -T"
-    alias lta="eza -T -a"
-    alias tree="eza -TF"
+    abbr --add ls eza
+    abbr --add ll "eza -lF --time-style=long-iso"
+    abbr --add la "eza -laF --time-style=long-iso"
+    abbr --add lt "eza -T"
+    abbr --add lta "eza -T -a"
+    abbr --add tree "eza -TF"
 end
 
 # ----------------------------------------------
@@ -78,37 +83,45 @@ end
 # ----------------------------------------------
 if type -q zoxide
     zoxide init fish | source
-    alias cd="z"
+    abbr --add cd z
 end
 
 # ----------------------------------------------
 # Library: gitui
 # ----------------------------------------------
 if type -q gitui
-    alias gitui="gitui -t mocha.ron"
+    abbr --add gitui "gitui -t mocha.ron"
 end
 
 # ----------------------------------------------
-# Library: mise
+# Library: gomi
 # ----------------------------------------------
-if type -q trash-put
-    alias rm='trash-put'
+if type -q gomi
+    abbr --add rm gomi
 end
 
 # ----------------------------------------------
 # Library: yq
 # ----------------------------------------------
 if type -q yq
-    alias yqjson="yq -o json"
-    alias yqyaml="yq -o yaml -P"
+    abbr --add yqjson "yq -o json"
+    abbr --add yqyaml "yq -o yaml -P"
 end
 
 # ----------------------------------------------
 # Library: zoxide
 # ----------------------------------------------
 if type -q task
-    alias t="task"
+    abbr --add t task
 end
+
+# Claude Code
+if type -q claude
+    abbr --add cc claude
+end
+
+# difit
+abbr --add difit "npx difit"
 
 # ----------------------------------------------
 # Library: Orbstack
@@ -162,14 +175,14 @@ function zoxide_fzf -d "Change directory to selected directory managed by zoxide
         commandline -f repaint
     end
 end
-alias cdd=zoxide_fzf
+abbr --add cdd zoxide_fzf
 
 function mise_fzf -d "Add dependencies to current directory with mise"
     set src_line (mise list --installed | fzf-tmux -p -q "$input" --header "Select the library to install." --layout=reverse --cycle)
     echo $src_line | read -l _language _version _source _required
     commandline -r -- "mise use $_language@$_version"
 end
-alias misef=mise_fzf
+abbr --add misef mise_fzf
 
 function git_branch_fzf -d "Check out new branch"
     set branch_name (git branch -a --format='%(refname:short)' | grep -v "$(git branch --show-current)" | fzf-tmux -p 80% --layout reverse --cycle --header "Select the branch to checkout as new branch." --preview 'git log --color=always {}' --preview-window down:50%:sharp)
@@ -186,7 +199,7 @@ function git_branch_fzf -d "Check out new branch"
     end
     commandline -f repaint
 end
-alias gitb git_branch_fzf
+abbr --add gitb git_branch_fzf
 
 function wt -d "Git worktree management (use tmux C-Space C-w)"
     if test -n "$TMUX"
@@ -280,27 +293,46 @@ function cd_parent_without_newline
 end
 bind shift-up cd_parent_without_newline
 
-function cd_child_without_newline
-    # Get all directories
-    set child_dirs (exa -d */)
-
-    # Check the number of directories
-    if count $child_dirs >1
-        # If more than one directory, use fzf to select
-        set selected_dir (printf "%s\n" $child_dirs | fzf --layout=reverse --preview 'exa -l --time-style=long-iso {}')
-    else if count $child_dirs = 1
-        # If only one directory, select it directly
-        set selected_dir $child_dirs
+function dirh_fzf_without_newline
+    set -l all_dirs $dirprev $dirnext
+    if not set -q all_dirs[1]
+        echo "No directory history. Use cd a few times first."
+        commandline -f repaint
+        return 0
     end
 
-    # If a directory was selected, move to it
+    set -l uniq_dirs
+    for dir in $all_dirs[-1..1]
+        if not contains -- $dir $uniq_dirs
+            set -a uniq_dirs $dir
+        end
+    end
+
+    set -l preview_cmd 'if command -q eza; eza -laF --time-style=long-iso --color always {}; else ls -la {}; end'
+    set -l selected_dir (printf "%s\n" $uniq_dirs | fzf --layout=reverse --height 40% --preview $preview_cmd --query "$PWD")
+
     if test -n "$selected_dir"
-        cd $selected_dir
+        cd -- $selected_dir
     end
 
     commandline -f repaint
 end
-bind shift-down cd_child_without_newline
+bind shift-down dirh_fzf_without_newline
+
+bind alt-left prevd_without_newline
+bind alt-right nextd_without_newline
+bind alt-up cd_parent_without_newline
+bind alt-down dirh_fzf_without_newline
+
+# Raw sequences for terminals/tmux that don't resolve symbolic modified arrows.
+bind \e\[1\;2D prevd_without_newline
+bind \e\[1\;2C nextd_without_newline
+bind \e\[1\;2A cd_parent_without_newline
+bind \e\[1\;2B dirh_fzf_without_newline
+bind \e\[1\;3D prevd_without_newline
+bind \e\[1\;3C nextd_without_newline
+bind \e\[1\;3A cd_parent_without_newline
+bind \e\[1\;3B dirh_fzf_without_newline
 
 function clia
     read -l line
