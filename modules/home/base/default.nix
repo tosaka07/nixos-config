@@ -41,6 +41,7 @@
       delta
       gh
       ghq
+      git-lfs
       gwq
       gwm
       go-task
@@ -61,6 +62,7 @@
       yazi
       lazygit
       octorus
+      fresh-editor
 
       # languages
       nixd
