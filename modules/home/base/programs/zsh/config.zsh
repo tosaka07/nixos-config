@@ -53,8 +53,7 @@ typeset -gU PATH
 # ----------------------------------------------
 # Variables
 # ----------------------------------------------
-export FZF_TMUX=1
-export FZF_TMUX_OPTS="-p"
+export ENABLE_TOOL_SEARCH=true
 
 # ----------------------------------------------
 # Library: mise
