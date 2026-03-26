@@ -61,6 +61,16 @@
 
       # キーストロークのディレイを減らす
       set -sg escape-time 0
+      set -g xterm-keys on
+      set -g extended-keys on
+
+      # Pane borders
+      set -g pane-border-lines heavy
+      set -g pane-border-indicators both
+      set -g pane-border-status top
+      set -g pane-border-style "fg=#6c7086"
+      set -g pane-active-border-style "fg=#89b4fa"
+      set -g pane-border-format "#[fg=#f9e2af,bold] #{pane_index} #[fg=#cdd6f4]#{?pane_title,#{pane_title},#{pane_current_command}} #[fg=#9399b2]#{b:pane_current_path} "
 
       # | ペインを縦分割する
       bind | split-window -h -c '#{pane_current_path}'
@@ -100,7 +110,7 @@
 
       # 'C-w' gwm (Git Worktree Manager) を起動し、選択したディレクトリで開発環境を構築
       # レイアウト: 左ペイン(claude) | 右上ペイン(vim) | 右下ペイン(terminal)
-      bind C-w popup -xC -yC -w60% -h50% -E -d "#{pane_current_path}" "zsh -ic gwmt"
+      bind C-w popup -xC -yC -w60% -h50% -E -d "#{pane_current_path}" "fish -ic gwmt"
 
       TMUX_FZF_LAUNCH_KEY="C-f"
 
@@ -114,6 +124,9 @@
       set-option -s escape-time 0
       set-option -g display-time 4000
       set-option -g focus-events on
+
+      # Allow passthrough sequences
+      set -g allow-passthrough on
     '';
   };
 }
