@@ -16,6 +16,7 @@
     };
     brews = [
       "macism"
+      "k1low/tap/mo"
     ];
     casks = [
       "yashiki"
@@ -56,6 +57,8 @@
       "adobe-creative-cloud"
       "spotify"
       "drawio"
+      "codex-app-TEMP_REMOVE"
+      "godot-TEMP_REMOVE"
     ];
   };
 }
