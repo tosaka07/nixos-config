@@ -40,10 +40,7 @@
       "mcp__serena__think_about_whether_you_are_done",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(nix-build:*)",
-      "mcp__context7__query-docs",
-      "Bash(until jq -e '.status==\"\"complete\"\"' /tmp/codex-review-20260218121459-72783.json)",
-      "Bash(do sleep 15)",
-      "Bash(done)"
+      "mcp__context7__query-docs"
     ],
     "deny": []
   }
