@@ -62,11 +62,15 @@
 
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     gwm = {
       url = "github:tosaka07/gwm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    worktrunk = {
+      url = "github:max-sixty/worktrunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -92,6 +96,7 @@
       k1low-homebrew-tap,
       llm-agents,
       gwm,
+      worktrunk,
       skills-catalog,
       ...
     }:
@@ -109,6 +114,7 @@
           k1low-homebrew-tap
           llm-agents
           gwm
+          worktrunk
           skills-catalog
           ;
       };

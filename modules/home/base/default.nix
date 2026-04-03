@@ -19,6 +19,7 @@
     ./programs/ssh.nix
     ./programs/sheldon
     ./programs/tmux/tmux.nix
+    ./programs/worktrunk.nix
     ./programs/zsh/default.nix
     ./programs/zsh/zeno.nix
   ];
@@ -51,7 +52,6 @@
       zellij
       glow
       ngrok
-      yt-dlp
       difftastic
       hyperfine
       ghostscript
