@@ -15,6 +15,7 @@
     baseIndex = 1;
     plugins = with pkgs; [
       tmuxPlugins.tmux-fzf
+      tmuxPlugins.tmux-thumbs
       {
         plugin = tmuxPlugins.resurrect;
         extraConfig = "set -g @resurrect-strategy-nvim 'session'";
