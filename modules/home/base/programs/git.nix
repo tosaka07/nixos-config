@@ -114,6 +114,8 @@
 
         # ローカルのみ残っている残りカスブランチを削除する
         nifuramu = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|main'|xargs git branch -d; git fetch --prune; };f";
+        # 対応 worktree を削除し、merge 済みなら branch も削除する
+        nifuramuwt = "!f () { wt remove --yes --foreground \"$@\"; };f";
       };
 
       color = {

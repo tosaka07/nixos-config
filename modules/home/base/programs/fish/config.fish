@@ -219,6 +219,186 @@ function cc -d "Create tmux pane on right with 30% width and launch claude"
     end
 end
 
+function tmux-agent-panel -d "Create an agentic coding tmux layout for a target directory"
+    set -l dir
+
+    if test (count $argv) -gt 0
+        set dir (path normalize (string replace -r '^~' $HOME -- $argv[1]))
+    else
+        set dir (pwd)
+    end
+
+    if not test -d "$dir"
+        echo "Directory not found: $dir" >&2
+        return 1
+    end
+
+    set -l name (basename "$dir")
+    set -l agent_cmd "claude"
+    set -l editor_cmd "nvim ."
+    set -l shell_cmd $SHELL
+
+    if test -z "$shell_cmd"
+        set shell_cmd "fish"
+    end
+
+    if test -n "$TMUX"
+        set -l window_id (tmux new-window -P -F "#{window_id}" -c "$dir" -n "$name")
+        set -l left_target "$window_id".0
+        set -l editor_target "$window_id".1
+        set -l terminal_target "$window_id".2
+        tmux split-window -h -t "$window_id" -c "$dir" -l 40%
+        tmux split-window -v -t "$editor_target" -c "$dir" -l 35%
+        tmux select-pane -t "$left_target"
+        tmux send-keys -t "$left_target" "$agent_cmd" Enter
+        tmux send-keys -t "$editor_target" "$editor_cmd" Enter
+        tmux send-keys -t "$terminal_target" "$shell_cmd" Enter
+        tmux select-pane -t "$editor_target"
+        return 0
+    end
+
+    set -l session_name "$name"
+    set -l suffix 1
+    while tmux has-session -t "$session_name" 2>/dev/null
+        set session_name "$name-$suffix"
+        set suffix (math $suffix + 1)
+    end
+
+    tmux new-session -d -s "$session_name" -c "$dir" -n "$name"
+    set -l window_target "$session_name":"$name"
+    set -l left_target "$window_target".0
+    set -l editor_target "$window_target".1
+    set -l terminal_target "$window_target".2
+    tmux split-window -h -t "$window_target" -c "$dir" -l 40%
+    tmux split-window -v -t "$editor_target" -c "$dir" -l 35%
+    tmux send-keys -t "$left_target" "$agent_cmd" Enter
+    tmux send-keys -t "$editor_target" "$editor_cmd" Enter
+    tmux send-keys -t "$terminal_target" "$shell_cmd" Enter
+    tmux select-pane -t "$editor_target"
+    tmux attach-session -t "$session_name"
+end
+
+function wta -d "Switch to a worktree with worktrunk and open tmux-agent-panel"
+    if test (count $argv) -eq 0
+        set -l branch (wt switch --no-cd)
+
+        if test $status -ne 0
+            return $status
+        end
+
+        if test -z "$branch"
+            return 0
+        end
+
+        wt switch --execute "fish -ic 'tmux-agent-panel {{ worktree_path }}'" "$branch"
+        return $status
+    end
+
+    wt switch --execute "fish -ic 'tmux-agent-panel {{ worktree_path }}'" $argv
+end
+
+function __nifuramu_default_branch
+    set -l remote_head (git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+    if test -n "$remote_head"
+        string replace "origin/" "" -- "$remote_head"
+        return 0
+    end
+
+    for candidate in main master
+        if git show-ref --verify --quiet "refs/remotes/origin/$candidate"
+            echo "$candidate"
+            return 0
+        end
+    end
+
+    for candidate in main master
+        if git show-ref --verify --quiet "refs/heads/$candidate"
+            echo "$candidate"
+            return 0
+        end
+    end
+end
+
+function __nifuramu_worktree_path_for_branch --argument branch
+    git worktree list --porcelain | awk -v branch_ref="refs/heads/$branch" '
+        /^worktree / { wt = substr($0, 10) }
+        /^branch / && $2 == branch_ref { print wt; exit }
+    '
+end
+
+function nifuramu -d "Prune merged branches and their worktrees"
+    if not git rev-parse --show-toplevel >/dev/null 2>/dev/null
+        echo "Not in a git repository" >&2
+        return 1
+    end
+
+    set -l current_worktree (path normalize (git rev-parse --show-toplevel))
+    git fetch --prune
+    if test $status -ne 0
+        echo "git fetch --prune failed" >&2
+        return 1
+    end
+
+    set -l default_branch (__nifuramu_default_branch)
+    if test -z "$default_branch"
+        echo "Could not determine default branch" >&2
+        return 1
+    end
+
+    set -l base_ref "refs/remotes/origin/$default_branch"
+    if not git show-ref --verify --quiet "$base_ref"
+        set base_ref "refs/heads/$default_branch"
+    end
+
+    set -l merged_branches (git for-each-ref --format='%(refname:short)' --merged="$base_ref" refs/heads)
+    set -l protected_branches $default_branch main master
+    set -l targets
+
+    for branch in $merged_branches
+        if contains -- "$branch" $protected_branches
+            continue
+        end
+        set targets $targets $branch
+    end
+
+    if test (count $targets) -eq 0
+        echo "No merged branches or worktrees to prune"
+        return 0
+    end
+
+    set -l exit_code 0
+
+    for branch in $targets
+        set -l worktree_path (__nifuramu_worktree_path_for_branch "$branch")
+        if test -n "$worktree_path"
+            set worktree_path (path normalize "$worktree_path")
+
+            if test "$worktree_path" = "$current_worktree"
+                echo "Skip current worktree: $worktree_path"
+                continue
+            end
+
+            git worktree remove "$worktree_path"
+            if test $status -ne 0
+                set exit_code 1
+                continue
+            end
+
+            echo "Removed worktree: $worktree_path"
+        end
+
+        git branch -D "$branch"
+        if test $status -ne 0
+            set exit_code 1
+            continue
+        end
+
+        echo "Deleted branch: $branch"
+    end
+
+    return $exit_code
+end
+
 function aicommit -d "Generate commit message"
     set prompt """
     Generate a concise git commit message in present tense for the given code diff, following the specifications below:
