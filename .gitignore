@@ -1,6 +1,7 @@
 /result
 
 .env
+.env.local
 !.env.op
 
 tmux-client-*.log
