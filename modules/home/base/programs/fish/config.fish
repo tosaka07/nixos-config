@@ -52,8 +52,6 @@ set -Ux FZF_DEFAULT_OPTS "\
 
 if type -q fzf
     fzf --fish | source
-    bind \t fzf-completion
-    bind -M insert \t fzf-completion
 end
 
 # ----------------------------------------------
