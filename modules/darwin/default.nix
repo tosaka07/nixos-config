@@ -19,4 +19,10 @@
   # Enable fish shell system-wide (Darwin-specific)
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];
+
+  # sudo を Touch ID で認証可能にする
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true;
+  };
 }
