@@ -62,7 +62,10 @@
       yazi
       lazygit
       octorus
+      xurl
       fresh-editor
+      maestro
+      azure-cli
 
       # languages
       nixd
@@ -78,7 +81,6 @@
       amp
       ccstatusline
       ccusage
-      ccusage-codex
       claude-code
       codex
       copilot-cli
