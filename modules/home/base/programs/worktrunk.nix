@@ -23,9 +23,60 @@
     pager = "delta --paging=never"
 
 
-    # gitignore されたファイル（.env, node_modules, .direnv 等）を先にコピー
+    # gitignore されたファイル（.env, .direnv 等）を先にコピー
     # wta / --execute で起動するコマンドから即座に参照できるよう post-create で実行する
-    [post-create]
+    [pre-start]
     copy = "wt step copy-ignored"
+
+    # コピー対象から除外するパターン
+    # サイズが大きく再生成も容易なため、各言語のビルド成果物・依存物はコピーしない
+    [step.copy-ignored]
+    exclude = [
+      # Node.js / JS
+      "node_modules/",
+      ".next/",
+      ".nuxt/",
+      ".turbo/",
+      ".cache/",
+      ".parcel-cache/",
+      ".svelte-kit/",
+      "dist/",
+      "build/",
+
+      # Python / uv
+      "__pycache__/",
+      ".venv/",
+      "venv/",
+      ".pytest_cache/",
+      ".mypy_cache/",
+      ".ruff_cache/",
+      ".tox/",
+      "*.egg-info/",
+
+      # Rust
+      "target/",
+
+      # Swift
+      ".build/",
+      "DerivedData/",
+      "Pods/",
+      ".swiftpm/",
+
+      # JVM / Android
+      ".gradle/",
+
+      # Flutter / Dart
+      ".dart_tool/",
+
+      # Terraform
+      ".terraform/",
+
+      # Test coverage
+      "coverage/",
+
+      # Nix build outputs
+      "result",
+      "result-*",
+    ]
   '';
 }
