@@ -10,7 +10,10 @@
 
     skills.enableAll = true;
 
-    targets.claude.enable = true;
+    targets = {
+      claude.enable = true;
+      codex.enable = true;
+    };
 
     excludePatterns = [
       "/.system"
