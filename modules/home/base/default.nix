@@ -70,6 +70,7 @@
       # languages
       nixd
       nil
+      cmake
 
       # fonts
       udev-gothic-nf
