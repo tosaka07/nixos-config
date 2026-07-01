@@ -10,7 +10,6 @@
   k1low-homebrew-tap,
   llm-agents,
   gwm,
-  worktrunk,
   skills-catalog,
 }:
 {
@@ -65,7 +64,6 @@ nix-darwin.lib.darwinSystem {
       home-manager.users.${username} = {
         imports = [
           (import ../users/${username} { inherit hostname username system; })
-          worktrunk.homeModules.default
           skills-catalog.homeManagerModules.default
         ];
       };

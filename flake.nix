@@ -69,11 +69,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    worktrunk = {
-      url = "github:max-sixty/worktrunk";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     skills-catalog = {
       url = "path:./skills";
       inputs.agent-skills.inputs.nixpkgs.follows = "nixpkgs";
@@ -96,7 +91,6 @@
       k1low-homebrew-tap,
       llm-agents,
       gwm,
-      worktrunk,
       skills-catalog,
       ...
     }:
@@ -114,7 +108,6 @@
           k1low-homebrew-tap
           llm-agents
           gwm
-          worktrunk
           skills-catalog
           ;
       };

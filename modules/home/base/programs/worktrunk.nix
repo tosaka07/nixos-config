@@ -1,8 +1,10 @@
+{ pkgs, lib, ... }:
 {
-  programs.worktrunk = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+  home.packages = [ pkgs.worktrunk ];
+
+  programs.fish.interactiveShellInit = ''
+    ${lib.getExe pkgs.worktrunk} config shell init fish | source
+  '';
 
   xdg.configFile."worktrunk/config.toml".text = ''
     worktree-path = "~/workspace/worktree/{{ repo }}/{{ branch | sanitize }}"
