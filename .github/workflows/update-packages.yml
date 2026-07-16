@@ -17,7 +17,6 @@ jobs:
       fail-fast: false
       matrix:
         package:
-          - gwq
           - octorus
           - xurl
     steps:

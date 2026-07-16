@@ -9,7 +9,6 @@
   typester-homebrew-yashiki,
   k1low-homebrew-tap,
   llm-agents,
-  gwm,
   skills-catalog,
 }:
 {
@@ -20,7 +19,7 @@
 nix-darwin.lib.darwinSystem {
   inherit system;
   specialArgs = {
-    inherit hostname username system llm-agents gwm;
+    inherit hostname username system llm-agents;
   };
   modules = [
     # Common user system configuration
@@ -58,7 +57,7 @@ nix-darwin.lib.darwinSystem {
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
-        inherit hostname username system llm-agents gwm;
+        inherit hostname username system llm-agents;
       };
 
       home-manager.users.${username} = {

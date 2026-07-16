@@ -13,10 +13,6 @@
       signByDefault = true;
     };
 
-    ignores = [
-      ".gwm.toml"
-    ];
-
     settings = {
       user = {
         name = "tosaka07";

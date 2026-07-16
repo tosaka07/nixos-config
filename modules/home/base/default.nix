@@ -15,7 +15,6 @@
     ./programs/bat.nix
     ./programs/git.nix
     ./programs/gitui.nix
-    ./programs/gwm.nix
     ./programs/herdr.nix
     ./programs/mise.nix
     ./programs/ssh.nix
@@ -45,8 +44,6 @@
       gh
       ghq
       git-lfs
-      gwq
-      gwm
       go-task
       nixfmt
       google-cloud-sdk

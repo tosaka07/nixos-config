@@ -109,10 +109,6 @@
 
       bind C-i popup -xC -yC -w90% -h90% -d "#{pane_current_path}" -e "tmux_popup=1" -e "tmux_parent_pane=#{pane_id}"
 
-      # 'C-w' gwm (Git Worktree Manager) を起動し、選択したディレクトリで開発環境を構築
-      # レイアウト: 左ペイン(claude) | 右上ペイン(vim) | 右下ペイン(terminal)
-      bind C-w popup -xC -yC -w60% -h50% -E -d "#{pane_current_path}" "fish -ic gwmt"
-
       TMUX_FZF_LAUNCH_KEY="C-f"
 
       # ステータスバー

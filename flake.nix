@@ -64,11 +64,6 @@
       url = "github:numtide/llm-agents.nix";
     };
 
-    gwm = {
-      url = "github:tosaka07/gwm";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     skills-catalog = {
       url = "path:./skills";
       inputs.agent-skills.inputs.nixpkgs.follows = "nixpkgs";
@@ -90,7 +85,6 @@
       typester-homebrew-yashiki,
       k1low-homebrew-tap,
       llm-agents,
-      gwm,
       skills-catalog,
       ...
     }:
@@ -107,37 +101,11 @@
           typester-homebrew-yashiki
           k1low-homebrew-tap
           llm-agents
-          gwm
           skills-catalog
           ;
       };
-      # Overlay で定義したパッケージを packages 属性としてエクスポート
-      forAllSystems =
-        f:
-        nixpkgs.lib.genAttrs
-          [
-            "aarch64-darwin"
-            "x86_64-darwin"
-          ]
-          (
-            system:
-            f (
-              import nixpkgs {
-                inherit system;
-                overlays = [
-                  (import ./overlays)
-                  gwm.overlays.default
-                ];
-              }
-            )
-          );
     in
     {
-      packages = forAllSystems (pkgs: {
-        gwq = pkgs.gwq;
-        gwm = pkgs.gwm;
-      });
-
       darwinConfigurations = {
         "CA-20033730" = mkDarwinSystem {
           hostname = "CA-20033730";

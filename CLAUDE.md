@@ -56,7 +56,7 @@ Example module structure:
 ```
 overlays/
 ├── default.nix           # overlay エントリポイント
-└── gwq/                   # パッケージディレクトリ
+└── octorus/               # パッケージディレクトリ
     ├── hashes.json        # version, hash, vendorHash
     ├── default.nix        # パッケージ定義
     └── update.py          # 更新スクリプト
@@ -88,7 +88,7 @@ overlays/
 
 3. **`update.py`** - GitHub API から最新バージョンを取得して更新
    ```bash
-   nix-shell -p python3 nix-prefetch-github --run "python overlays/gwq/update.py"
+   nix-shell -p python3 nix-prefetch-github --run "python overlays/octorus/update.py"
    ```
 
 #### 新しいパッケージの追加手順
