@@ -47,6 +47,15 @@ nix-darwin.lib.darwinSystem {
           "k1low/homebrew-tap" = k1low-homebrew-tap;
         };
         mutableTaps = false;
+        # Homebrew 6.0 (2026-06) から、非公式タップの formula/cask/tap 自体を
+        # 明示的に信頼させないと読み込みを拒否するようになった。
+        # https://docs.brew.sh/Tap-Trust
+        trust.taps = [
+          "laishulu/homebrew"
+          "nikitabobko/tap"
+          "typester/yashiki"
+          "k1low/tap"
+        ];
       };
     }
 
