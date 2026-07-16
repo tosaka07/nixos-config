@@ -11,10 +11,12 @@
     ./programs/fish/fish.nix
     ./programs/zellij/zellij.nix
     ./programs/atuin.nix
+    ./programs/awake.nix
     ./programs/bat.nix
     ./programs/git.nix
     ./programs/gitui.nix
     ./programs/gwm.nix
+    ./programs/herdr.nix
     ./programs/mise.nix
     ./programs/ssh.nix
     ./programs/sheldon
@@ -66,6 +68,8 @@
       fresh-editor
       maestro
       azure-cli
+      herdr
+      beads
 
       # languages
       nixd
@@ -87,6 +91,7 @@
       copilot-cli
       cursor-agent
       # gemini-cli
+      hunk
       opencode
     ]);
 }
