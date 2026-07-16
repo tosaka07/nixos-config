@@ -317,15 +317,23 @@ run_foreground() {
       exit 1
     fi
     echo ok > "$status"
-    caff=""
+    caff="" timer="" battery=""
     while read -r line; do
       case "$line" in
         caffeinate=*) caff="${line#caffeinate=}" ;;
+        timer=*) timer="${line#timer=}" ;;
+        battery=*) battery="${line#battery=}" ;;
       esac
     done
     pmset -a disablesleep 0
     if [ -n "$caff" ]; then
       kill "$caff" 2>/dev/null || true
+    fi
+    if [ -n "$timer" ]; then
+      kill "$timer" 2>/dev/null || true
+    fi
+    if [ -n "$battery" ]; then
+      kill "$battery" 2>/dev/null || true
     fi
     echo "awake: スリープ設定を復元しました (pmset -a disablesleep 0)"
     rm -f "$fifo" "$status"
@@ -364,6 +372,7 @@ run_foreground() {
       kill -TERM "$parent" 2>/dev/null || true
     ) 9>&- &
     TIMER_PID=$!
+    echo "timer=$TIMER_PID" >&9
   fi
 
   if (( battery_threshold > 0 )); then
@@ -388,6 +397,7 @@ run_foreground() {
       done
     ) 9>&- &
     BATTERY_PID=$!
+    echo "battery=$BATTERY_PID" >&9
   fi
 
   local startup_msg="awake: 実行中 (PID=$$, caffeinate PID=$CAFFEINATE_PID"
