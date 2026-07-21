@@ -67,6 +67,7 @@ nix-darwin.lib.darwinSystem {
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
         inherit hostname username system llm-agents;
+        inputs = skills-catalog.inputs;
       };
 
       home-manager.users.${username} = {
