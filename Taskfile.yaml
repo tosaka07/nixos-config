@@ -62,3 +62,15 @@ tasks:
     desc: "nixpkgs のみを更新します"
     cmds:
       - nix flake update nixpkgs
+
+  update-input:
+    desc: "指定した flake input のみを更新します（例: task update-input -- llm-agents）"
+    cmds:
+      - nix flake lock --update-input {{.CLI_ARGS}}
+
+  update-skills-input:
+    desc: "skills/ 配下の flake input を更新し、トップレベルの skills-catalog にも反映します（例: task update-skills-input -- mattpocock-skills）"
+    dir: skills
+    cmds:
+      - nix flake lock --update-input {{.CLI_ARGS}}
+      - cd .. && nix flake lock --update-input skills-catalog
