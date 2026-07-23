@@ -8,6 +8,7 @@
 }:
 {
   imports = [
+    ./programs/archive-downloads.nix
     ./programs/fish/fish.nix
     ./programs/zellij/zellij.nix
     ./programs/atuin.nix
