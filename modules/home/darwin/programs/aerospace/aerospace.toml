@@ -1,6 +1,8 @@
 # AeroSpace configuration
 # Reference: https://nikitabobko.github.io/AeroSpace/guide
 
+config-version = 2
+
 after-startup-command = []
 exec-on-workspace-change = []
 start-at-login = false
@@ -132,6 +134,10 @@ if.app-id = "company.thebrowser.Browser"
 run = "move-node-to-workspace 2"
 
 [[on-window-detected]]
+if.app-id = "company.thebrowser.dia"
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
 if.app-id = "com.apple.finder"
 run = "layout floating"
 
@@ -169,6 +175,10 @@ run = "layout tiling"
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
 run = "layout tiling"
+
+[[on-window-detected]]
+if.app-id = "com.mitchellh.ghostty"
+run = "move-node-to-workspace 3"
 
 [workspace-to-monitor-force-assignment]
 1 = "main"
