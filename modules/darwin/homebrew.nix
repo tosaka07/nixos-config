@@ -14,6 +14,21 @@
       autoUpdate = false;
       upgrade = false;
     };
+    taps = [
+      "homebrew/cask"
+      {
+        name = "typester/yashiki";
+        trusted = true;
+      }
+      {
+        name = "nikitabobko/tap";
+        trusted = true;
+      }
+      {
+        name = "k1low/tap";
+        trusted = true;
+      }
+    ];
     brews = [
       "macism"
       "k1low/tap/mo"
@@ -51,7 +66,6 @@
       "microsoft-teams"
       "microsoft-outlook"
       "localsend"
-      "chatgpt-atlas"
       "postman"
       "claude"
       "adobe-creative-cloud"
